@@ -15,7 +15,7 @@ class ConnectionManager:
 	def connection_to_peer(self, ip_addr):
 		##TODO RECUP LIST PYRO
 		print("Connection to " + str(ip_addr))
-		network = Pyro.Proxy("PYRO:" + server.URI_CONNECTION + "@" + ip_addr + ":" + str(server.DEFALUT_PORT))
+		network = Pyro.Proxy("PYRO:" + server.URI_CONNECTION + "@" + ip_addr + ":" + str(server.DEFAULT_PORT))
 		print("Get connection")
 		ip_list_from_peer = network.get_ip_list()
 		print("List from peer " + ip_list_from_peer)
