@@ -1,0 +1,18 @@
+Connexion peer-to-peer
+Un serveur tourne chez chaque joueur
+Jeu en tour par tour
+Chaque machine dialogue avec chaque machine
+
+Connexion :
+Le nouveau joueur se connecte à une machine
+Il lui demande les IP des machines qu'il connaît
+Pour chaque adresse :
+    S'il est déjà connecté, ne fait rien
+    S'il n'est pas connecté, applique la même procédure de connexion
+Toutes les adresses connues => fin de la connexion
+
+Tour par tour :
+La machine dont c'est le tour calcul les actions, puis les transmet aux autres
+Le joueur suivant ne joue que lorsqu'il reçoit les infos de l'autre
+À la fin d'un tour : ping vers toutes les autres machines
+    Si une machine est déconnectée, l'enlever du jeu et prévenir les autres machines
