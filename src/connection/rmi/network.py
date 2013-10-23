@@ -1,6 +1,7 @@
 import Pyro4
+from connection import connectionManager
 
 class Network:
 
 	def get_ip_list(self, ip):
-		return ConnectionManager()._ip_list
+		return connectionManager.ConnectionManager()._ip_list
