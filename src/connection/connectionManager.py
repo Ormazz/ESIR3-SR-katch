@@ -6,6 +6,7 @@ class ConnectionManager:
 
     instance = None
     _ip_list = []
+    _ip_serv = None
 
     def __new__(my_class):
         if my_class.instance is None:
@@ -24,6 +25,7 @@ class ConnectionManager:
             self._ip_list.append(ip_addr)
 
         for ip in ip_list_from_peer:
-            if ip not in self._ip_list:
-                self._ip_list.append(ip)
-                self.connection_to_peer(ip)
+            if self._ip_serv != ip:
+                if ip not in self._ip_list:
+                    self._ip_list.append(ip)
+                    self.connection_to_peer(ip)
