@@ -5,7 +5,7 @@ import urllib.request
 
 def create_server():
 	"""Instanciates a RMI server"""
-	network_inst = network.Network
+	network_inst = network.Network()
 	ip = urllib.request.urlopen('http://ip.42.pl/raw').read().decode()
 	Pyro4.Daemon.serveSimple(
 	    {network_inst:connection.URI_CONNECTION},

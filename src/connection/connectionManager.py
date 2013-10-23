@@ -18,7 +18,10 @@ class ConnectionManager:
         network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip_addr + ":" + str(connection.DEFAULT_PORT))
         print("Get connection")
         ip_list_from_peer = network.get_ip_list()
-        print("List from peer " + ip_list_from_peer)
+        print("List from peer " + str(ip_list_from_peer))
+
+        if ip_addr not in self._ip_list:
+            self._ip_list.append(ip_addr)
 
         for ip in ip_list_from_peer:
             if ip not in self._ip_list:
