@@ -14,7 +14,7 @@ class ConnectionManager:
         return my_class.instance
 
     def connection_to_peer(self, ip_addr):
-        ##TODO RECUP LIST PYRO
+        ##CHECK IP
         print("Connection to " + str(ip_addr))
         network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip_addr + ":" + str(connection.DEFAULT_PORT))
         print("Get connection")

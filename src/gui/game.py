@@ -1,5 +1,5 @@
 import pygame
-import inputbox
+from gui import inputbox
 from connection import connectionManager
 
 class Game(object):
@@ -10,7 +10,7 @@ class Game(object):
         pygame.init()
         clock = pygame.time.Clock()
         screen = pygame.display.set_mode((1067, 600))
-        background = pygame.image.load('../../img/background.jpe')
+        background = pygame.image.load('../img/background.jpe')
         sprites = pygame.sprite.Group()
 
         running = True
