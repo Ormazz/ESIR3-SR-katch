@@ -1,6 +1,7 @@
 import threading
 import time
-from connection import server,connectionManager,client
+from gui import client
+from connection import server,connectionManager
 import urllib.request
 
 ip = urllib.request.urlopen('http://ip.42.pl/raw').read().decode()
@@ -10,4 +11,5 @@ t.start()
 
 connectionManager.ConnectionManager()._ip_serv = ip
 time.sleep(2)
-client.start_game()
+client.launch()
+#client.start_game()
