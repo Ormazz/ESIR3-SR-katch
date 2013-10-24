@@ -1,5 +1,6 @@
 import pygame
 import inputbox
+from connection import connectionManager
 
 class Game(object):
 
@@ -29,7 +30,8 @@ class Game(object):
 
     def create_input_ip(self, screen):
         if self._display_input_box:
-            inputbox.ask(screen, "IP to connect")
+            ip = inputbox.ask(screen, "IP to connect")
+            connectionManager.ConnectionManager().connection_to_peer(ip)
             self._display_input_box = False
 
 Game().main()
