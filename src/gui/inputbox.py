@@ -19,9 +19,37 @@ def get_key():
   while 1:
     event = pygame.event.poll()
     if event.type == KEYDOWN:
+      if pygame.key.get_mods() & KMOD_SHIFT:
+        return get_laptop_key(event.key)
       return event.key
     else:
       pass
+
+def get_laptop_key(key):
+    if key == 38:
+        return 49
+    elif key == 233:
+        return 50
+    elif key == 34:
+        return 51
+    elif key == 39:
+        return 52
+    elif key == 40:
+        return 53
+    elif key == 45:
+        return 54
+    elif key == 232:
+        return 55
+    elif key == 95:
+        return 56
+    elif key == 231:
+        return 57
+    elif key == 224:
+        return 48
+    elif key == 59:
+        return 46
+
+    return key
 
 def display_box(screen, message):
   "Print a message in a box in the middle of the screen"
