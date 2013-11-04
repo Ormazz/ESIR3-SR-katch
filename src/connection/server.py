@@ -5,6 +5,7 @@ import connection
 def create_server(ip):
 	"""Instanciates a RMI server"""
 	network_inst = network.Network()
+	print(ip)
 	Pyro4.Daemon.serveSimple(
 	    {network_inst:connection.URI_CONNECTION},
 	    host= ip,

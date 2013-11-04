@@ -10,6 +10,6 @@ t = threading.Thread(target=server.create_server, args=(ip,))
 t.start()
 
 connectionManager.ConnectionManager()._ip_serv = ip
-time.sleep(2)
+#time.sleep(2)
 game.Game().main()
 #client.start_game()
