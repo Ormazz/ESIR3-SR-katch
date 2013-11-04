@@ -25,8 +25,10 @@ class ConnectionManager:
             self._ip_list.append(ip_addr)
 
         for ip in ip_list_from_peer:
-            print(_ip_serv + " : " + ip)
+            print(self._ip_serv + " : " + ip)
             if self._ip_serv != ip:
                 if ip not in self._ip_list:
                     self._ip_list.append(ip)
                     self.connection_to_peer(ip)
+
+        print("Final list : " + str(_ip_list))
