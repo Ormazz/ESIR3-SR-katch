@@ -6,5 +6,4 @@ class Network(object):
         return connectionManager.ConnectionManager()._ip_list
 
     def add_ip(self, ip):
-        if ip not in connectionManager.ConnectionManager()._ip_list:
-            connectionManager.ConnectionManager()._ip_list.append(ip)
+        connectionManager.ConnectionManager().add_peer(ip)
