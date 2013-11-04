@@ -13,7 +13,7 @@ class ConnectionManager:
             my_class.instance = object.__new__(my_class)
         return my_class.instance
 
-    def add_peer(self, ip_addr):
+    def add_peer(self, ip):
         if ip not in self._ip_list:
             self._ip_list.append(ip)
         print("Final list : " + str(self._ip_list))
