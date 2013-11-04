@@ -31,4 +31,4 @@ class ConnectionManager:
                     self._ip_list.append(ip)
                     self.connection_to_peer(ip)
 
-        print("Final list : " + str(_ip_list))
+        print("Final list : " + str(self._ip_list))
