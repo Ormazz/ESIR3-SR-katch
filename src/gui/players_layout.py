@@ -17,6 +17,7 @@ class Players_layout:
 
     def update(self):
 
+        print(connectionManager.ConnectionManager()._has_new_ip)
         if connectionManager.ConnectionManager()._has_new_ip is True:
             ip_list = connectionManager.ConnectionManager()._ip_list
             y = 40

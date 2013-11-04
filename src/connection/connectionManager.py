@@ -20,6 +20,7 @@ class ConnectionManager:
             self._ip_list.append(ip)
             _has_new_ip = True
         print("Final list : " + str(self._ip_list))
+        print(self._has_new_ip)
 
     def connection_to_peer(self, ip_addr):
         ##CHECK IP
