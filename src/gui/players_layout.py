@@ -16,8 +16,11 @@ class Players_layout:
         self.screen.blit(label, (x, y))
 
     def update(self):
-        ip_list = connectionManager.ConnectionManager()._ip_list
-        y = 20
-        for ip in ip_list:
-            self.draw(ip, 14, 1113, y)
-            y += 5
+
+        if connectionManager.ConnectionManager()._has_new_ip is True:
+            ip_list = connectionManager.ConnectionManager()._ip_list
+            y = 40
+            for ip in ip_list:
+                self.draw(ip, 14, 1100, y)
+                y += 10
+            connectionManager.ConnectionManager()._has_new_ip = False

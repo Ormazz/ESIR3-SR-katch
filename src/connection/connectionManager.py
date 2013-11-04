@@ -8,6 +8,8 @@ class ConnectionManager:
     _ip_list = []
     _ip_serv = None
 
+    _has_new_ip = False
+
     def __new__(my_class):
         if my_class.instance is None:
             my_class.instance = object.__new__(my_class)
@@ -16,6 +18,7 @@ class ConnectionManager:
     def add_peer(self, ip):
         if ip not in self._ip_list:
             self._ip_list.append(ip)
+            _has_new_ip = True
         print("Final list : " + str(self._ip_list))
 
     def connection_to_peer(self, ip_addr):
@@ -26,14 +29,12 @@ class ConnectionManager:
         ip_list_from_peer = network.get_ip_list()
         print("List from peer " + str(ip_list_from_peer))
 
-        if ip_addr not in self._ip_list:
-            self._ip_list.append(ip_addr)
+        self.add_peer(ip_addr)
 
         for ip in ip_list_from_peer:
             print(self._ip_serv + " : " + ip)
             if self._ip_serv != ip:
                 if ip not in self._ip_list:
-                    self._ip_list.append(ip)
                     self.connection_to_peer(ip)
 
         print("Final list : " + str(self._ip_list))
