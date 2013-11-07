@@ -15,6 +15,7 @@
 import pygame, pygame.font, pygame.event, pygame.draw, string
 from pygame.locals import *
 from gui import updatable
+from connection import connectionManager
 
 class InputBox(updatable.Updatable):
 
@@ -25,9 +26,6 @@ class InputBox(updatable.Updatable):
     def __init__(self, screen, question):
         self.screen = screen
         self._question = question
-
-    def get_text(self):
-        return "".join(self._current_string)
 
     def get_key(self, event):
         if event.type == KEYDOWN:
@@ -40,6 +38,7 @@ class InputBox(updatable.Updatable):
             inkey = self.get_key(event)
             if event.key == pygame.K_RETURN:
                 self._display = False
+                connectionManager.ConnectionManager().connection_to_peer("".join(self._current_string))
             elif inkey == K_BACKSPACE:
                 self._current_string = self._current_string[0:-1]
             elif inkey == K_MINUS:
