@@ -1,7 +1,8 @@
 import pygame
 from connection import connectionManager
+from gui import updatable
 
-class Players_layout:
+class Players_layout(updatable.Updatable):
 
     screen = None
 
@@ -21,5 +22,5 @@ class Players_layout:
             y = 40
             for ip in ip_list:
                 self.draw(ip, 14, 1100, y)
-                y += 10
+                y += 20
             connectionManager.ConnectionManager()._has_new_ip = False
