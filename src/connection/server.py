@@ -6,11 +6,9 @@ def create_server(ip):
 	"""Instanciates a RMI server"""
 	network_inst = network.Network()
 	print(ip)
-	Pyro4.Daemon.serveSimple(
-	    {network_inst:connection.URI_CONNECTION},
-	    host= ip,
-	    ns=False,
-	    port=connection.DEFAULT_PORT)
+	d = Pyro4.Daemon(port=9999, nathost="pyro.server.com", natport=5555)
+	uri = d.register(network_inst, connection.URI_CONNECTION)
+	
 
 # NOTE : As you can see, the public IP address is calculated from an externate website
 # However, as you can guess, this is NOT optimal at all
