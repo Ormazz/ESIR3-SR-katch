@@ -6,7 +6,7 @@ def create_server(ip):
 	"""Instanciates a RMI server"""
 	network_inst = network.Network()
 	print(ip)
-	d = Pyro4.Daemon(port=8080, nathost="pyro.server.com", natport=8080)
+	d = Pyro4.Daemon(port=9999, nathost=ip, natport=5555)
 	uri = d.register(network_inst, connection.URI_CONNECTION)
 	print(uri)
 	
