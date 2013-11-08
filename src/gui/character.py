@@ -39,8 +39,8 @@ class Character(updatable.Updatable):
         self._left_img.append(surface.subsurface((92,0, 23, 23)))
         self._left_img.append(surface.subsurface((115,0, 23, 23)))
 
-        self._right_img.append(surface.subsurface((0,0, 23, 23)))
-        self._right_img.append(surface.subsurface((23,0, 23, 23)))
+        self._right_img.append(surface.subsurface((138,0, 23, 23)))
+        self._right_img.append(surface.subsurface((161,0, 23, 23)))
 
     def update(self):
         tmp_image = self._sprite.image
