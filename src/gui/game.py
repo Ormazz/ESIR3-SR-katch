@@ -1,5 +1,6 @@
 import pygame
 from gui import inputBox
+from gui import character
 from gui import players_layout
 from gui import display_manager
 
@@ -17,30 +18,38 @@ class Game(object):
         pygame.display.set_caption("Katch")
         clock = pygame.time.Clock()
         self._screen = pygame.display.set_mode((1217, 600))
-        
+
         sprites = pygame.sprite.Group()
         self.create_background()
-        
+
         self._display_manager.add(players_layout.Players_layout(self._screen))
         input_box = inputBox.InputBox(self._screen, "IP to connect")
         self._display_manager.add(input_box)
 
         self.create_input_ip()
-
+        wizard = character.Character(self._screen, "../img/wizard.png", 0, 0)
+        self._display_manager.add(wizard)
         running = True
         while running:
-            dt = clock.tick(60)
+            dt = clock.tick(5)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
+                    if event.key == pygame.K_DOWN:
+                        wizard.down()
+                    if event.key == pygame.K_UP:
+                        wizard.up()
+                    if event.key == pygame.K_LEFT:
+                        wizard.left()
+                    if event.key == pygame.K_RIGHT:
+                        wizard.right()
                     input_box.event(event)
 
             self.update_background()
             self._display_manager.update()
-
             sprites.update(dt / 1000.)
             sprites.draw(self._screen)
             pygame.display.flip()

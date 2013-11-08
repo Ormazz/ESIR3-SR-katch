@@ -45,6 +45,7 @@ class InputBox(updatable.Updatable):
                 self._current_string.append("_")
             elif inkey <= 127:
                 self._current_string.append(chr(inkey))
+            self.display_box(self.screen, self._question + ": " + "".join(self._current_string))
 
     def update(self):
         if self._display:
