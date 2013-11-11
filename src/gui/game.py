@@ -1,8 +1,8 @@
 import pygame
 from gui import inputBox
-from gui import character
 from gui import players_layout
 from gui import display_manager
+from gui import player_manager
 
 class Game(object):
 
@@ -10,6 +10,7 @@ class Game(object):
     _screen = None
     _background = None
     _display_manager = None
+    _player_manager = None
 
     def main(self):
         self._display_manager = display_manager.DisplayManager()
@@ -27,25 +28,20 @@ class Game(object):
         self._display_manager.add(input_box)
 
         self.create_input_ip()
-        wizard = character.Character(self._screen, "../img/wizard.png", 0, 0)
-        self._display_manager.add(wizard)
+        
+        player_manag = player_manager.Player_manager(self._screen)
+        self._display_manager.add(player_manag)
+
         running = True
         while running:
-            dt = clock.tick(5)
+            dt = clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
-                    if event.key == pygame.K_DOWN:
-                        wizard.down()
-                    if event.key == pygame.K_UP:
-                        wizard.up()
-                    if event.key == pygame.K_LEFT:
-                        wizard.left()
-                    if event.key == pygame.K_RIGHT:
-                        wizard.right()
+                    player_manag.event(event)
                     input_box.event(event)
 
             self.update_background()
