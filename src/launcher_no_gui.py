@@ -7,7 +7,7 @@ import urllib.request
 ip = urllib.request.urlopen('http://ip.42.pl/raw').read().decode()
 
 connectionManager.ConnectionManager()._ip_serv = ip
-katch.Katch(connectionManager.ConnectionManager())
+katch.Katch()._connection_manager = connectionManager.ConnectionManager()
 
 t = threading.Thread(target=server.create_server, args=(ip,))
 t.start()

@@ -7,11 +7,10 @@ class Katch:
     _game_state = None
     _connection_Manager = None
 
-    def __new__(my_class, connection_manager):
+    def __new__(my_class):
         if my_class.instance is None:
             my_class.instance = object.__new__(my_class)
             my_class._game_state = game_state.Game_state()
-            my_class._connection_Manager = connection_manager
         return my_class.instance
 
     def add_player(self, ip):
