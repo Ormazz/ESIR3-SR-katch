@@ -5,7 +5,7 @@ class Katch:
 
     instance = None
     _game_state = None
-    _connection_Manager = None
+    _connection_manager = None
 
     def __new__(my_class):
         if my_class.instance is None:
@@ -18,7 +18,7 @@ class Katch:
         self._game_state.add_player(new_player)
 
     def connection_to_peer(self, ip):
-        self._connection_Manager.connection_to_peer(ip)
+        self._connection_manager.connection_to_peer(ip)
 
     def visit_players(self):
         self._game_state._players_visited = True

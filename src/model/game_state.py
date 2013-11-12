@@ -18,6 +18,6 @@ class Game_state:
 	def remove_collectable(self, collectable):
 		self._collectables.remove(collectable)
 
-	def get_player(ip):
+	def get_player(self, ip):
 		ip = [p for p in self._players if p._ip == ip]
 		return ip[0]

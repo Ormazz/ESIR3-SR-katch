@@ -19,7 +19,7 @@ class Players_layout(updatable.Updatable,gui_control.Gui_control):
 
     def update(self):
         if self._katch.players_has_changed() is True:
-            ip_list = [p._ip for p in self._katch.get_players]
+            ip_list = [p._ip for p in self._katch.get_players()]
             y = 40
             for ip in ip_list:
                 self.draw(ip, 14, 1100, y)

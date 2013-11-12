@@ -18,7 +18,6 @@ class ConnectionManager:
         if ip not in self._ip_list:
             self._ip_list.append(ip)
             katch.Katch().add_player(ip)
-        print("Final list : " + str(self._ip_list))
 
     def connection_to_peer(self, ip_addr):
         ##CHECK IP
@@ -31,7 +30,6 @@ class ConnectionManager:
         self.add_peer(ip_addr)
 
         for ip in ip_list_from_peer:
-            print(self._ip_serv + " : " + ip)
             if self._ip_serv != ip:
                 if ip not in self._ip_list:
                     self.connection_to_peer(ip)
