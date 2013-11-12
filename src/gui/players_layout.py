@@ -1,8 +1,9 @@
 import pygame
 from connection import connectionManager
 from gui import updatable
+from gui import gui_control
 
-class Players_layout(updatable.Updatable):
+class Players_layout(updatable.Updatable,gui_control.Gui_control):
 
     screen = None
 
@@ -17,10 +18,10 @@ class Players_layout(updatable.Updatable):
         self.screen.blit(label, (x, y))
 
     def update(self):
-        if connectionManager.ConnectionManager()._has_new_ip is True:
-            ip_list = connectionManager.ConnectionManager()._ip_list
+        if self._katch.players_has_changed() is True:
+            ip_list = [p._ip for p in self._katch.get_players]
             y = 40
             for ip in ip_list:
                 self.draw(ip, 14, 1100, y)
                 y += 20
-            connectionManager.ConnectionManager()._has_new_ip = False
+            self._katch.visit_players()

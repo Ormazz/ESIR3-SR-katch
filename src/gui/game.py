@@ -5,12 +5,9 @@ from gui import display_manager
 from gui import player_manager
 
 class Game(object):
-
-    _display_input_box = False
     _screen = None
     _background = None
     _display_manager = None
-    _player_manager = None
 
     def main(self):
         self._display_manager = display_manager.DisplayManager()
@@ -27,8 +24,6 @@ class Game(object):
         input_box = inputBox.InputBox(self._screen, "IP to connect")
         self._display_manager.add(input_box)
 
-        self.create_input_ip()
-        
         player_manag = player_manager.Player_manager(self._screen)
         self._display_manager.add(player_manag)
 
@@ -60,7 +55,3 @@ class Game(object):
         self._screen.blit(self._background, (0, 0))
         self._background = pygame.image.load('../img/background.jpe')
         self._screen.blit(self._background, (0, 0))
-
-
-    def create_input_ip(self):
-        self._input_box = inputBox.InputBox(self._screen, "IP to connect")

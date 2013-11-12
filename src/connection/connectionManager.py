@@ -1,5 +1,6 @@
 import connection
 from connection import rmi
+from control import katch
 import Pyro4
 
 class ConnectionManager:
@@ -7,8 +8,6 @@ class ConnectionManager:
     instance = None
     _ip_list = []
     _ip_serv = None
-
-    _has_new_ip = False
 
     def __new__(my_class):
         if my_class.instance is None:
@@ -18,9 +17,8 @@ class ConnectionManager:
     def add_peer(self, ip):
         if ip not in self._ip_list:
             self._ip_list.append(ip)
-            self._has_new_ip = True
+            katch.Katch().add_player(ip)
         print("Final list : " + str(self._ip_list))
-        print(self._has_new_ip)
 
     def connection_to_peer(self, ip_addr):
         ##CHECK IP
