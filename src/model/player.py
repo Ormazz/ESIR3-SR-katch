@@ -7,20 +7,20 @@ class Player:
 
     _scope = 10
 
-    _up = 0
-    _down = 1
-    _left = 2
-    _right = 3
+    _UP = 0
+    _DOWN = 1
+    _LEFT = 2
+    _RIGHT = 3
 
     def __init__(self, ip):
         self._ip = ip
 
     def move(self, direction):
-        if direction == self._up:
+        if direction == Player._UP:
             self._y = self._y - self._scope
-        elif direction == self._down:
+        elif direction == Player._DOWN:
             self._y = self._y + self._scope
-        elif direction == self._right:
+        elif direction == Player._RIGHT:
             self._x == self._x + self._scope
-        elif direction == self._left:
+        elif direction == Player._LEFT:
             self._x == self._x - self._scope
