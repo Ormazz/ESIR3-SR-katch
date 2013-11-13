@@ -40,6 +40,7 @@ class Game(object):
                     if event.key == pygame.K_ESCAPE:
                         running = False
                     self._player_manager.event(event)
+                    input_box.event(event)
                         
 
             self.update_background()
