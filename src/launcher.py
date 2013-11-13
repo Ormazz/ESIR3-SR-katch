@@ -8,10 +8,11 @@ import urllib.request
 ip = urllib.request.urlopen('http://ip.42.pl/raw').read().decode()
 
 connectionManager.ConnectionManager()._ip_serv = ip
-katch.Katch()._connection_manager = connectionManager.ConnectionManager()
+myGame = game.Game()
+katch.Katch().init(connectionManager.ConnectionManager(), myGame.get_player_manager())
 
 t = threading.Thread(target=server.create_server, args=(ip,))
 t.start()
 #time.sleep(2)
-game.Game().main()
+myGame.main()
 #client.start_game()
