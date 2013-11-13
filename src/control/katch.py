@@ -18,8 +18,8 @@ class Katch:
         self._player_manager = player_manager
         self._connection_manager = connection_manager
         new_player = player.Player(connection_manager._ip_serv)
-        new_player._x = 0
-        new_player._y = 0
+        new_player._x = 100
+        new_player._y = 100
         self._game_state.add_player(new_player)
 
     def add_player(self, ip):

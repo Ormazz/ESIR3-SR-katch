@@ -12,7 +12,7 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
 
     def __init__(self, screen):
         self._screen = screen
-        self._wizard = character.Character(screen, "../img/wizard.png", 0, 0)
+        self._wizard = character.Character(screen, "../img/wizard.png", 100, 100)
 
     def event(self, event):
         if self._started:
