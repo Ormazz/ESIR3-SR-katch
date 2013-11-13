@@ -32,6 +32,7 @@ class Katch:
 
     def connection_to_peer(self, ip):
         self._connection_manager.connection_to_peer(ip)
+        self._player_manager.activate_player(100, 100)
 
     def visit_players(self):
         self._game_state._players_visited = True
