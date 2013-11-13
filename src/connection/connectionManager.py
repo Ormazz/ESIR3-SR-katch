@@ -14,6 +14,18 @@ class ConnectionManager:
             my_class.instance = object.__new__(my_class)
         return my_class.instance
 
+    def get_player_position(self, ip):
+        network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+        return network.get_current_position()
+
+    def get_current_position(self):
+        position = []
+        player = katch.Katch().get_player(self._ip_serv)
+        position.append(player._x)
+        position.append(player._y)
+
+        return position
+
     def add_peer(self, ip):
         if ip not in self._ip_list:
             self._ip_list.append(ip)

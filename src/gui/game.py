@@ -8,25 +8,28 @@ class Game(object):
     _screen = None
     _background = None
     _display_manager = None
+    _player_manager = None
 
-    def main(self):
+    def __init__(self):
         self._display_manager = display_manager.DisplayManager()
 
         pygame.init()
         pygame.display.set_caption("Katch")
-        clock = pygame.time.Clock()
         self._screen = pygame.display.set_mode((1217, 600))
 
+        self._player_manager = player_manager.Player_manager(self._screen)
+        self._display_manager.add(self._player_manager)
+
+    def main(self):
         sprites = pygame.sprite.Group()
         self.create_background()
 
         self._display_manager.add(players_layout.Players_layout(self._screen))
+
         input_box = inputBox.InputBox(self._screen, "IP to connect")
         self._display_manager.add(input_box)
 
-        player_manag = player_manager.Player_manager(self._screen)
-        self._display_manager.add(player_manag)
-
+        clock = pygame.time.Clock()
         running = True
         while running:
             dt = clock.tick(60)
@@ -36,14 +39,17 @@ class Game(object):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
-                    player_manag.event(event)
-                    input_box.event(event)
+                    self._player_manager.event(event)
+                        
 
             self.update_background()
             self._display_manager.update()
             sprites.update(dt / 1000.)
             sprites.draw(self._screen)
             pygame.display.flip()
+
+    def get_player_manager(self):
+        return self._player_manager
 
     def create_background(self):
         self._background = pygame.Surface(self._screen.get_size())

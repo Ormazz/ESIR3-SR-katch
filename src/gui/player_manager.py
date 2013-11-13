@@ -1,8 +1,9 @@
 import pygame
 from gui import character
 from gui import updatable
+from gui import gui_control
 
-class Player_manager(updatable.Updatable):
+class Player_manager(updatable.Updatable, gui_control.Gui_control):
 
     _wizard = None
     _started = False
@@ -26,6 +27,12 @@ class Player_manager(updatable.Updatable):
         if self._started:
             self._wizard.update()
 
+        for player in self._players:
+            player.update()
+
     def activate_player(self, x, y):
         self._wizard.set_position(x, y)
         self._started = True
+
+    def create_player(self, x, y):
+        self._players.append(character.Character(screen, "../img/wizard.png", x, y))
