@@ -27,6 +27,7 @@ class Game(object):
         self._display_manager.add(players_layout.Players_layout(self._screen))
 
         input_box = inputBox.InputBox(self._screen, "IP to connect")
+        self._display_manager._input_box = input_box
         self._display_manager.add(input_box)
 
         clock = pygame.time.Clock()
@@ -51,6 +52,9 @@ class Game(object):
 
     def get_player_manager(self):
         return self._player_manager
+
+    def get_display_manager(self):
+        return self._display_manager
 
     def create_background(self):
         self._background = pygame.Surface(self._screen.get_size())
