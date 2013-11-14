@@ -37,4 +37,4 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
         self._started = True
 
     def create_player(self, x, y):
-        self._players.append(character.Character(self._screen, "../img/wizard.png", x, y))
+        self._players.append(character.Character(self._screen, "../img/player.png", x, y))
