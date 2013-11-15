@@ -9,7 +9,7 @@ class Players_layout(updatable.Updatable,gui_control.Gui_control):
 
     def __init__(self, screen):
         self.screen = screen
-        self.draw("Players", 16, 1113, 10)
+        self.draw("Players", 16, screen.get_width() - 104, 10)
 
 
     def draw(self, text, size, x, y):
@@ -22,6 +22,6 @@ class Players_layout(updatable.Updatable,gui_control.Gui_control):
             ip_list = [p._ip for p in self._katch.get_players()]
             y = 40
             for ip in ip_list:
-                self.draw(ip, 14, 1100, y)
+                self.draw(ip, 14, self.screen.get_width() - 120, y)
                 y += 20
             self._katch.visit_players()

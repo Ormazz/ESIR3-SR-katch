@@ -49,6 +49,7 @@ class Game(object):
             sprites.update(dt / 1000.)
             sprites.draw(self._screen)
             pygame.display.flip()
+        pygame.quit ()
 
     def get_player_manager(self):
         return self._player_manager

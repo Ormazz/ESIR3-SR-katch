@@ -20,7 +20,7 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
             if event.key == pygame.K_UP:
                 self._wizard.up()
             if event.key == pygame.K_LEFT:
-                self._wizard.left()
+                self._wizardleft()
             if event.key == pygame.K_RIGHT:
                 self._wizard.right()
 
@@ -32,7 +32,7 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
             player.update()
 
     def activate_player(self, x, y):
-        self._wizard = character.Character(self._screen, "../img/wizard.png", 100, 100)
+        self._wizard = character.Character(self._screen, "../img/wizard.png", x, y)
         self._wizard.set_position(x, y)
         self._started = True
 
