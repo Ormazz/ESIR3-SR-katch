@@ -3,6 +3,7 @@ from gui import updatable
 
 class Character(updatable.Updatable):
 
+    _ip = None
     _sprite = None
     _screen = None
     _x = None
@@ -15,7 +16,8 @@ class Character(updatable.Updatable):
     _left_img = []
     _right_img = []
 
-    def __init__(self, screen, image, x, y):
+    def __init__(self, screen, image, x, y, ip):
+        _ip = ip
         self._sprite = pygame.sprite.Sprite()
         surface = pygame.image.load(image).convert()
         self._surface = surface

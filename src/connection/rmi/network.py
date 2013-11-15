@@ -10,3 +10,6 @@ class Network(object):
 
     def add_ip(self, ip):
         connectionManager.ConnectionManager().add_peer(ip)
+
+    def move_player(self, ip, direction):
+        connectionManager.ConnectionManager.move_player(ip, direction)

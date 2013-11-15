@@ -32,6 +32,7 @@ class Game(object):
 
         clock = pygame.time.Clock()
         running = True
+
         while running:
             dt = clock.tick(60)
             for event in pygame.event.get():
@@ -42,7 +43,7 @@ class Game(object):
                         running = False
                     self._player_manager.event(event)
                     input_box.event(event)
-                        
+
 
             self.update_background()
             self._display_manager.update()
