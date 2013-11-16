@@ -12,4 +12,5 @@ class Network(object):
         connectionManager.ConnectionManager().add_peer(ip)
 
     def move_player(self, ip, direction):
+        print("CALL")
         connectionManager.ConnectionManager.move_player(ip, direction)
