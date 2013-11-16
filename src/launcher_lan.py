@@ -1,16 +1,17 @@
 import threading
 import time
+from gui import game
 from control import katch
 from connection import server,client,connectionManager
 import urllib.request
 
-ip = urllib.request.urlopen('http://ip.42.pl/raw').read().decode()
+ip = "192.168.0.27"
 
 connectionManager.ConnectionManager()._ip_serv = ip
-katch.Katch()._connection_manager = connectionManager.ConnectionManager()
+myGame = game.Game()
+katch.Katch().init(connectionManager.ConnectionManager(), myGame.get_player_manager(), myGame.get_display_manager())
 
 t = threading.Thread(target=server.create_server, args=(ip,))
 t.start()
-
-time.sleep(2)
-client.start_game()
+#time.sleep(2)
+myGame.main()
