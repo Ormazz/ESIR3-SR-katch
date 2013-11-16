@@ -17,7 +17,7 @@ class Character(updatable.Updatable):
     _right_img = []
 
     def __init__(self, screen, image, x, y, ip):
-        _ip = ip
+        self._ip = ip
         self._sprite = pygame.sprite.Sprite()
         surface = pygame.image.load(image).convert()
         self._surface = surface
