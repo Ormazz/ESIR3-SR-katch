@@ -31,11 +31,29 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
     def create_player(self, x, y, ip):
         self._players.append(character.Character(self._screen, "../img/player.png", x, y, ip))
 
-    def wizard_can_move(self):
+    def wizard_can_move(self, direction):
+        old_x = self.wizard._x
+        old_y = self.wizard._y
+        self.wizard_position(direction)
+
+        result = True
         for p in self._players:
-            if pygame.sprite.collide_rect(self.wizard._sprite, p._sprite):
-                return False
-        return True
+            if p._x == self.wizard._x and p._y == self.wizard._y:
+                result = False
+                pass
+
+        self.wizard.set_position(old_x, old_y)
+        return result
+
+    def wizard_position(self, direction):
+        if direction == pygame.K_UP:
+            self.wizard.set_position(self.wizard._x, self.wizard._y - self.wizard._scope)
+        elif direction == pygame.K_DOWN:
+            self.wizard.set_position(self.wizard._x, self.wizard._y + self.wizard._scope)
+        elif direction == pygame.K_LEFT:
+            self.wizard.set_position(self.wizard._x - self.wizard._scope, self.wizard._y)
+        elif direction == pygame.K_RIGHT:
+            self.wizard.set_position(self.wizard._x + self.wizard._scope, self.wizard._y)
 
     def get_player(self, ip):
         print(ip)
