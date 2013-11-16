@@ -5,7 +5,7 @@ class Player:
     _score = 0
     _ip = None
 
-    _scope = 10
+    _scope = 23
 
     _UP = 0
     _DOWN = 1
