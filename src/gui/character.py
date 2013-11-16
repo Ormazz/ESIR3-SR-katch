@@ -58,21 +58,25 @@ class Character(updatable.Updatable):
         self._screen.blit(self._sprite.image, self._sprite.rect)
 
     def up(self):
+        print("UP " + self._ip)
         self._sprite.image = self._surface.subsurface((46,0, 23, 23))
         self._next_image = self._surface.subsurface((69,0, 23, 23))
         self.set_position(self._x, self._y - 10)
 
     def down(self):
+        print("DOWN " + self._ip)
         self._sprite.image = self._surface.subsurface((0,0, 23, 23))
         self._next_image = self._surface.subsurface((23,0, 23, 23))
         self.set_position(self._x, self._y + 10)
 
     def left(self):
+        print("LEFT " + self._ip)
         self._sprite.image = self._surface.subsurface((92,0, 23, 23))
         self._next_image = self._surface.subsurface((115,0, 23, 23))
         self.set_position(self._x - 10, self._y)
 
     def right(self):
+        print("RIGHT " + self._ip)
         self._sprite.image = self._surface.subsurface((138,0, 23, 23))
         self._next_image = self._surface.subsurface((161,0, 23, 23))
         self.set_position(self._x + 10, self._y)
