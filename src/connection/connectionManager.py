@@ -50,6 +50,5 @@ class ConnectionManager:
             network.move_player(ip, direction)
 
     def move_player(self, ip, direction):
-        print("HI")
         katch.Katch().move_player(ip, direction)
 
