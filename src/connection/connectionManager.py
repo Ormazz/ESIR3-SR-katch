@@ -44,9 +44,10 @@ class ConnectionManager:
                     self.connection_to_peer(ip)
 
     def move_wizard(self, direction):
-        for ip in _ip_list:
+        for ip in self._ip_list:
+            print(ip)
             network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
-            network.move_player(self._ip_serv, direction)
+            network.move_player(ip, direction)
 
     def move_player(self, ip, direction):
         katch.Katch().move_player(ip, direction)
