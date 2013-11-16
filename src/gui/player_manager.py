@@ -32,6 +32,9 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
         self._players.append(character.Character(self._screen, "../img/player.png", x, y, ip))
 
     def get_player(self, ip):
-        pl = [p for p in self._players if p._ip == ip]
-        return pl[0]
+        print(ip)
+        for p in self._players:
+            if p._ip == ip:
+                print("player " + p._ip)
+                return p
 
