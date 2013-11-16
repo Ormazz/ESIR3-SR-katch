@@ -56,6 +56,7 @@ class Katch:
         return self._game_state.get_player(ip)
 
     def move_player(self, ip, direction):
+        print("HOY")
         player = self.get_player(ip)
         character = self._player_manager.get_player(ip)
         if direction == player._DOWN:
