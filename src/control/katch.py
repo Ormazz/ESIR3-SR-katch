@@ -58,18 +58,18 @@ class Katch:
     def move_player(self, ip, direction):
         player = self.get_player(ip)
         character = self._player_manager.get_player(îp)
-        if direction == Player._DOWN:
-            player.move(Player._DOWN)
+        if direction == player.Player._DOWN:
+            player.move(player.Player._DOWN)
             character.down()
-        if direction == Player._UP:
-            player.move(Player._UP)
+        if direction == player.Player._UP:
+            player.move(player.Player._UP)
             character.up()
-        if direction == Player._LEFT:
-            player.move(Player._LEFt)
+        if direction == player.Player._LEFT:
+            player.move(player.Player._LEFt)
             self._player_manager.wizard.left()
             character.left()
-        if direction == Player._RIGHT:
-            player.move(Player._RIGHT)
+        if direction == player.Player._RIGHT:
+            player.move(player.Player._RIGHT)
             self._player_manager.wizard.right()
             character.right()
 
@@ -78,18 +78,18 @@ class Katch:
         if self._player_manager._started :
             player = self.get_player(self._connection_manager._ip_serv)
             if event.key == pygame.K_DOWN:
-                self._connection_manager.move_wizard(Player._DOWN)
-                player.move(Player._DOWN)
+                self._connection_manager.move_wizard(player.Player._DOWN)
+                player.move(player.Player._DOWN)
                 self._player_manager.wizard.down()
             if event.key == pygame.K_UP:
-                self._connection_manager.move_wizard(Player._UP)
-                player.move(Player._UP)
+                self._connection_manager.move_wizard(player.Player._UP)
+                player.move(player.Player._UP)
                 self._player_manager.wizard.up()
             if event.key == pygame.K_LEFT:
-                self._connection_manager.move_wizard(Player._LEFT)
-                player.move(Player._LEFT)
+                self._connection_manager.move_wizard(player.Player._LEFT)
+                player.move(player.Player._LEFT)
                 self._player_manager.wizard.left()
             if event.key == pygame.K_RIGHT:
-                self._connection_manager.move_wizard(Player._RIGHT)
-                player.move(Player._RIGHT)
+                self._connection_manager.move_wizard(player.Player._RIGHT)
+                player.move(player.Player._RIGHT)
                 self._player_manager.wizard.right()
