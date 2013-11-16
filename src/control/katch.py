@@ -87,7 +87,7 @@ class Katch:
                 self._player_manager.wizard.up()
             if event.key == pygame.K_LEFT:
                 self._connection_manager.move_wizard(player._LEFT)
-                player.move(player.._LEFT)
+                player.move(player._LEFT)
                 self._player_manager.wizard.left()
             if event.key == pygame.K_RIGHT:
                 self._connection_manager.move_wizard(player._RIGHT)
