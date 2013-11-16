@@ -68,7 +68,7 @@ class Katch:
             player.move(player._UP)
             character.up()
         if direction == player._LEFT:
-            player.move(player._LEFt)
+            player.move(player._LEFT)
             self._player_manager.wizard.left()
             character.left()
         if direction == player._RIGHT:
