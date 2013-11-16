@@ -14,7 +14,7 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
         self._screen = screen
 
     def event(self, event):
-        _katch.move_wizard(event)
+        self._katch.move_wizard(event)
 
     def update(self):
         if self._started:

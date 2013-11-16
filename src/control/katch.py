@@ -75,7 +75,7 @@ class Katch:
 
 
     def move_wizard(self, event):
-        if _player_manager._started :
+        if self._player_manager._started :
             player = self.get_player(self._connection_manager._ip_serv)
             if event.key == pygame.K_DOWN:
                 self._connection_manager.move_wizard(Player_DOWN)
