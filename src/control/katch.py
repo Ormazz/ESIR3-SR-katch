@@ -71,7 +71,6 @@ class Katch:
             player.move(player._RIGHT)
             character.right()
 
-
     def move_wizard(self, event):
         if self._player_manager._started :
             player = self.get_player(self._connection_manager._ip_serv)
@@ -91,3 +90,5 @@ class Katch:
                 self._connection_manager.move_wizard(player._RIGHT)
                 player.move(player._RIGHT)
                 self._player_manager.wizard.right()
+
+

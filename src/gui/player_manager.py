@@ -31,6 +31,12 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
     def create_player(self, x, y, ip):
         self._players.append(character.Character(self._screen, "../img/player.png", x, y, ip))
 
+    def wizard_can_move(self):
+        for p in self._players:
+            if pygame.sprite.collide_rect(wizard._sprite, p._sprite):
+                return False
+        return True
+
     def get_player(self, ip):
         print(ip)
         for p in self._players:
