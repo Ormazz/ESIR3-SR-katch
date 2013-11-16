@@ -49,7 +49,7 @@ class ConnectionManager:
         print("Final list : " + str(self._ip_list))
 
     def move_wizard(self, direction):
-        network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip_addr + ":" + str(connection.DEFAULT_PORT))
+        network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + self._ip_serv + ":" + str(connection.DEFAULT_PORT))
         network.move_player(self._ip_serv, direction)
 
     def move_player(self, ip, direction):

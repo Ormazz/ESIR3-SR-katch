@@ -57,7 +57,7 @@ class Katch:
 
     def move_player(self, ip, direction):
         player = self.get_player(ip)
-        character = self._player_manager.get_player(îp)
+        character = self._player_manager.get_player(ip)
         if direction == player._DOWN:
             player.move(player._DOWN)
             character.down()
