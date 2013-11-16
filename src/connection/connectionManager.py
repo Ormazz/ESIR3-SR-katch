@@ -32,12 +32,9 @@ class ConnectionManager:
             katch.Katch().add_player(ip)
 
     def connection_to_peer(self, ip_addr):
-        ##CHECK IP
-        print("Connection to " + str(ip_addr))
         network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip_addr + ":" + str(connection.DEFAULT_PORT))
         network.add_ip(self._ip_serv)
         ip_list_from_peer = network.get_ip_list()
-        print("List from peer " + str(ip_list_from_peer))
 
         self.add_peer(ip_addr)
 
@@ -46,11 +43,11 @@ class ConnectionManager:
                 if ip not in self._ip_list:
                     self.connection_to_peer(ip)
 
-        print("Final list : " + str(self._ip_list))
-
     def move_wizard(self, direction):
         network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + self._ip_serv + ":" + str(connection.DEFAULT_PORT))
-        network.move_player(self._ip_serv, direction)
+        print(self._ip_serv + " " + str(direction))
+        print(str(network.get_player_position()))
+        network.move_player("192.168.0.22")
 
     def move_player(self, ip, direction):
         katch.Katch().move_player(ip, direction)
