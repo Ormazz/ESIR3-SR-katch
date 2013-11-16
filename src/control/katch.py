@@ -21,8 +21,8 @@ class Katch:
         self._connection_manager = connection_manager
         self._display_manager = display_manager
         new_player = player.Player(connection_manager._ip_serv)
-        new_player._x = 0
-        new_player._y = 0
+        new_player._x = 100
+        new_player._y = 100
         self._game_state.add_player(new_player)
 
     def add_player(self, ip):
@@ -41,7 +41,7 @@ class Katch:
         self.activate_player(self._connection_manager._ip_serv)
 
     def activate_player(self, ip):
-        self._player_manager.activate_player(0, 0, ip)
+        self._player_manager.activate_player(100, 100, ip)
 
     def visit_players(self):
         self._game_state._players_visited = True

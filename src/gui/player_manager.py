@@ -33,7 +33,7 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
 
     def wizard_can_move(self):
         for p in self._players:
-            if pygame.sprite.collide_rect(wizard._sprite, p._sprite):
+            if pygame.sprite.collide_rect(self.wizard._sprite, p._sprite):
                 return False
         return True
 
