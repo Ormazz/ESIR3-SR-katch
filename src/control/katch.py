@@ -117,7 +117,7 @@ class Katch:
         for x in range(0, len(matrice)):
             for y in range(0, len(matrice[x])):
                 if matrice[x][y]:
-                    collectable_manager.create_collectable(x*23, y*23)
+                    self._collectable_manager.create_collectable(x*23, y*23)
 
     def generate_collectable(self):
         matrice = game_state.Game_state().get_matrice()
