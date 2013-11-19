@@ -47,7 +47,7 @@ class Katch:
                 self._collectable_manager.set_started(True)
 
     def activate_collectable(self, ip):
-        matrice = self._connection_manager.get_collectable(ip)
+        matrice = self._connection_manager.get_collectables(ip)
         self.create_collectable(matrice)
         self._collectable_manager.set_started(True)
 
