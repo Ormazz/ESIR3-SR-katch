@@ -13,7 +13,7 @@ class Collectable_manager(updatable.Updatable):
 		self._screen = screen
 
 	def create_collectable(self, x, y):
-		self._collectables(collectable.Collectable(self._screen, "../img/spider.png", x, y, id))
+		self._collectables.append(collectable.Collectable(self._screen, "../img/spider.png", x, y, id))
 		self._id = self._id + 1
 
 	def remove_collectable(self, x, y):
