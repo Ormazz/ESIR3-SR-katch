@@ -108,6 +108,7 @@ class Katch:
                     player.move(player._RIGHT)
                     self._player_manager.wizard.right()
 
+
     def get_collectable(self):
         return game_state.Game_state().get_matrice(matrice)
 
@@ -129,3 +130,16 @@ class Katch:
                 i = i - 1
             else:
                 matrice[x][y] = True
+
+    def leave(self):
+        """Local exit method ; Alert the other players that we are not connected anymore"""
+        if self._player_manager._started:
+            self._connecion_manager.leave()
+
+    def remove_player(self,ip):
+        """Remove a player that has left the game"""
+
+        # Removing from the model
+        self._game_state.remove_player(self._game_state.get_player(ip))
+        # Removing from the interface
+        self._player_manager.remove_player(ip)

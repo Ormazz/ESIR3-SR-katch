@@ -16,3 +16,6 @@ class Network(object):
 
     def get_collectables(self):
         return connectionManager.ConnectionManager().get_collectables()
+
+    def remove_player(self, ip):
+    	connectionManager.ConnectionManager().remove_player(ip)
