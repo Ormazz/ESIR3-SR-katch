@@ -5,7 +5,7 @@ from control import katch
 from connection import server,client,connectionManager
 import urllib.request
 
-ip = "192.168.0.27"
+ip = "192.168.0.22"
 
 connectionManager.ConnectionManager()._ip_serv = ip
 myGame = game.Game()

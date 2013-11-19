@@ -11,6 +11,5 @@ class Hello:
 hello = Hello()
 Pyro4.Daemon.serveSimple(
     {hello:"example.hello"},
-    host="148.60.14.62",
-    ns=False,
-    port=9090)
+    host="doudou",
+    ns=True)

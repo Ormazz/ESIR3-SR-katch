@@ -13,3 +13,6 @@ class Network(object):
 
     def move_player(self, ip, direction):
         connectionManager.ConnectionManager().move_player(ip, direction)
+
+    def get_collectables(self):
+        return connectionManager.ConnectionManager().get_collectables()

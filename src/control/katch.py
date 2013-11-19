@@ -1,6 +1,8 @@
 from model import game_state
 from model import player
 import pygame
+import math
+import random
 
 class Katch:
 
@@ -9,6 +11,7 @@ class Katch:
     _connection_manager = None
     _player_manager = None
     _display_manager = None
+    _collectable_manager = None
 
     def __new__(my_class):
         if my_class.instance is None:
@@ -16,7 +19,7 @@ class Katch:
             my_class._game_state = game_state.Game_state()
         return my_class.instance
 
-    def init(self, connection_manager, player_manager, display_manager):
+    def init(self, connection_manager, player_manager, display_manager, collectable_manager):
         self._player_manager = player_manager
         self._connection_manager = connection_manager
         self._display_manager = display_manager
@@ -24,6 +27,9 @@ class Katch:
         new_player._x = 0
         new_player._y = 0
         self._game_state.add_player(new_player)
+        self._collectable_manager = collectable_manager
+
+        self.generate_collectable()
 
     def add_player(self, ip):
         new_player = player.Player(ip)
@@ -36,9 +42,19 @@ class Katch:
             self.activate_player(self._connection_manager._ip_serv)
             self._display_manager.disabled_input_box()
 
+            if not self._collectable_manager.get_started():
+                self.create_collectable(self.get_collectable())
+                self._collectable_manager.set_started(True)
+
+    def activate_collectable(self, ip):
+        matrice = self._connection_manager.get_collectable(ip)
+        self.create_collectable(matrice)
+        self._collectable_manager.set_started(True)
+
     def connection_to_peer(self, ip):
+        self.activate_collectable(ip)
         self._connection_manager.connection_to_peer(ip)
-        self.activate_player(self._connection_manager._ip_serv)
+    #    self.activate_player(self._connection_manager._ip_serv)
 
     def activate_player(self, ip):
         self._player_manager.activate_player(0, 0, ip)
@@ -92,4 +108,24 @@ class Katch:
                     player.move(player._RIGHT)
                     self._player_manager.wizard.right()
 
+    def get_collectable(self):
+        return game_state.Game_state().get_matrice(matrice)
 
+    def create_collectable(self, matrice):
+        game_state.Game_state().set_matrice(matrice)
+        matrice = game_state.Game_state().get_matrice() 
+        for x in matrice:
+            for y in matrice:
+                if matrice[x][y]:
+                    collectable_manager.create_collectable(x*23, y*23)
+
+    def generate_collectable(self):
+        matrice = game_state.Game_state().get_matrice()
+        for i in range(0, 10):
+            x = math.ceil(random.random() * 19)
+            y = math.ceil(random.random() * 19)
+
+            if matrice[x][y]:
+                i = i - 1
+            else:
+                matrice[x][y] = True

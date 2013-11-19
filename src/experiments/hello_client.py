@@ -4,5 +4,5 @@ import Pyro4
 
 # Client
 
-hello = Pyro.Proxy("PYRO:example.hello@148.60.14.62:9090")
+hello = Pyro4.Proxy("PYRO:example.hello@37.187.0.92:9090")
 print(hello.hello())

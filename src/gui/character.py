@@ -1,7 +1,7 @@
 import pygame
-from gui import updatable
+from gui import entity
 
-class Character(updatable.Updatable):
+class Character(entity.Entity):
 
     _ip = None
     _sprite = None
@@ -20,21 +20,7 @@ class Character(updatable.Updatable):
 
     def __init__(self, screen, image, x, y, ip):
         self._ip = ip
-        self._sprite = pygame.sprite.Sprite()
-        surface = pygame.image.load(image).convert()
-        self._surface = surface
-        surface.set_colorkey(pygame.Color(255,0,255,0))
-
-        #self.create_image(surface)
-
-        self._sprite.image = surface.subsurface((0,0, 23, 23))
-        self._next_image = surface.subsurface((23,0, 23, 23))
-
-        self._sprite.rect = self._sprite.image.get_rect()
-        self._screen = screen
-        self._sprite.rect.topleft = [x, y]
-        self._x = x
-        self._y = y
+        self.init(screen, image, x, y)
 
     def create_image(self, surface):
         self._down_img.append(surface.subsurface((0,0, 23, 23)))
@@ -48,16 +34,6 @@ class Character(updatable.Updatable):
 
         self._right_img.append(surface.subsurface((138,0, 23, 23)))
         self._right_img.append(surface.subsurface((161,0, 23, 23)))
-
-    def update(self):
-        tmp_image = self._sprite.image
-        self._sprite.image = self._next_image
-        self._next_image = tmp_image
-
-        self._sprite.rect = self._sprite.image.get_rect()
-        self._sprite.rect.topleft = [self._x, self._y]
-
-        self._screen.blit(self._sprite.image, self._sprite.rect)
 
     def up(self):
         print("UP " + self._ip)

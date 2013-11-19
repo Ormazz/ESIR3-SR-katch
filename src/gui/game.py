@@ -3,12 +3,15 @@ from gui import inputBox
 from gui import players_layout
 from gui import display_manager
 from gui import player_manager
+from gui import collectable
+from gui import collectable_manager
 
 class Game(object):
     _screen = None
     _background = None
     _display_manager = None
     _player_manager = None
+    _collectable_manager = None
 
     def __init__(self):
         self._display_manager = display_manager.DisplayManager()
@@ -19,6 +22,9 @@ class Game(object):
 
         self._player_manager = player_manager.Player_manager(self._screen)
         self._display_manager.add(self._player_manager)
+
+        self._collectable_manager = collectable_manager.Collectable_manager()
+        self._display_manager.add(self._collectable_manager)
 
     def main(self):
         sprites = pygame.sprite.Group()
@@ -32,7 +38,6 @@ class Game(object):
 
         clock = pygame.time.Clock()
         running = True
-
         while running:
             dt = clock.tick(60)
             for event in pygame.event.get():
@@ -50,13 +55,16 @@ class Game(object):
             sprites.update(dt / 1000.)
             sprites.draw(self._screen)
             pygame.display.flip()
-        pygame.quit ()
+        pygame.quit()
 
     def get_player_manager(self):
         return self._player_manager
 
     def get_display_manager(self):
         return self._display_manager
+
+    def get_collectable_manager(self):
+        return self._collectable_manager
 
     def create_background(self):
         self._background = pygame.Surface(self._screen.get_size())

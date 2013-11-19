@@ -14,5 +14,3 @@ class DisplayManager(updatable.Updatable):
 	def update(self):
 		for updatable in self._updatables:
 			updatable.update()
-
-

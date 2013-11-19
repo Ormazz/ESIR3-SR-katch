@@ -9,7 +9,7 @@ ip = urllib.request.urlopen('http://ip.42.pl/raw').read().decode()
 
 connectionManager.ConnectionManager()._ip_serv = ip
 myGame = game.Game()
-katch.Katch().init(connectionManager.ConnectionManager(), myGame.get_player_manager(), myGame.get_display_manager())
+katch.Katch().init(connectionManager.ConnectionManager(), myGame.get_player_manager(), myGame.get_display_manager(), myGame.get_collectable_manager())
 
 t = threading.Thread(target=server.create_server, args=(ip,))
 t.start()

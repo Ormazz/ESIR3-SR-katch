@@ -51,3 +51,9 @@ class ConnectionManager:
     def move_player(self, ip, direction):
         katch.Katch().move_player(ip, direction)
 
+    def get_collectables(self, ip):
+        network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT)) 
+        return network.get_collectables()
+
+    def get_wizard_collectables(self):
+        return katch.Katch().get_collectable()
