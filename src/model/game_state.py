@@ -6,6 +6,9 @@ class Game_state:
 
 	_matrice = [ [False for i in range(0, 20)] for j in range(0, 20)]
 
+	def set_players_visited(self, visited):
+		self._players_visited = visited
+
 	def add_player(self, player):
 		self._players.append(player)
 		self._players_visited = False

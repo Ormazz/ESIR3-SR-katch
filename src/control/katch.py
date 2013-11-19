@@ -59,8 +59,8 @@ class Katch:
     def activate_player(self, ip):
         self._player_manager.activate_player(0, 0, ip)
 
-    def visit_players(self):
-        self._game_state._players_visited = True
+    def visit_players(self, visit):
+        self._game_state.set_players_visited(visit)
 
     def players_has_changed(self):
         return not self._game_state._players_visited
