@@ -13,3 +13,6 @@ class Network(object):
 
     def move_player(self, ip, direction):
         connectionManager.ConnectionManager().move_player(ip, direction)
+
+    def remove_player(self, ip):
+    	connectionManager.ConnectionManager().remove_player(ip)

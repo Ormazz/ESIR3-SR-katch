@@ -62,3 +62,8 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
                 print("player " + p._ip)
                 return p
 
+    def remove_player(self, ip):
+        """Remove a player from the GUI"""
+        player = self.get_player(ip)
+        self._players.remove(player)
+

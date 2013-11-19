@@ -51,3 +51,13 @@ class ConnectionManager:
     def move_player(self, ip, direction):
         katch.Katch().move_player(ip, direction)
 
+    def leave(self):
+        """Alert the other players that we are leaving the game"""
+        for ip in self._ip_list:
+            network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+            network.remove_player(self._ip_serv)
+
+    def remove_player(self):
+        """Receive the exit message from a player. Remove it from the ips list."""
+        self._ip_list.remove(ip)
+        katch.Katch().remove_player(ip)
