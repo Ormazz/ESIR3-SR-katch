@@ -133,7 +133,7 @@ class Katch:
     def leave(self):
         """Local exit method ; Alert the other players that we are not connected anymore"""
         if self._player_manager._started:
-            self._connecion_manager.leave()
+            self._connection_manager.leave()
 
     def remove_player(self,ip):
         """Remove a player that has left the game"""
