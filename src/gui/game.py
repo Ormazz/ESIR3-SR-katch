@@ -23,7 +23,7 @@ class Game(object):
         self._player_manager = player_manager.Player_manager(self._screen)
         self._display_manager.add(self._player_manager)
 
-        self._collectable_manager = collectable_manager.Collectable_manager()
+        self._collectable_manager = collectable_manager.Collectable_manager(self._screen)
         self._display_manager.add(self._collectable_manager)
 
     def main(self):
