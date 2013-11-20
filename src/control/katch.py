@@ -110,11 +110,12 @@ class Katch:
 
 
     def get_collectable(self):
-        print(str(game_state.Game_state().get_matrice()))
         return game_state.Game_state().get_matrice()
 
     def create_collectable(self, matrice):
         game_state.Game_state().set_matrice(matrice)
+        print("Create collectable")
+        print(str(matrice))
         for x in range(0, len(matrice)):
             for y in range(0, len(matrice[x])):
                 if matrice[x][y]:

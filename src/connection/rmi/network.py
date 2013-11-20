@@ -15,6 +15,7 @@ class Network(object):
         connectionManager.ConnectionManager().move_player(ip, direction)
 
     def get_collectables(self):
+        print(str(connectionManager.ConnectionManager().get_wizard_collectables()))
         return connectionManager.ConnectionManager().get_wizard_collectables()
 
     def remove_player(self, ip):
