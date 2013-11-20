@@ -122,7 +122,8 @@ class Katch:
                     self._collectable_manager.create_collectable(x*23, y*23)
 
     def generate_collectable(self):
-        matrice = game_state.Game_state().get_matrice()
+        gs = game_state.Game_state()
+        matrice = gs.get_matrice()
         for i in range(0, 10):
             x = math.ceil(random.random() * 19)
             y = math.ceil(random.random() * 19)
@@ -130,7 +131,7 @@ class Katch:
             if matrice[x][y]:
                 i = i - 1
             else:
-                matrice[x][y] = True
+                gs.add_collectable(x,y)
 
     def leave(self):
         """Local exit method ; Alert the other players that we are not connected anymore"""

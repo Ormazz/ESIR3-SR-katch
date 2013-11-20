@@ -1,10 +1,19 @@
+from multiprocessing import Manager
+
 class Game_state:
 
 	_players_visited = True
 	_players = []
 	_collectables = []
 
-	_matrice = [ [False for i in range(0, 20)] for j in range(0, 20)]
+	_manager = Manager()
+	_matrice = _manager.list([[False for i in range(20)] for j in range(20)])
+
+	def _edit_matrice_value(self,x,y,value):
+		# We have to separe the line to synchronize the matrice
+		x_line = self._matrice[x]
+		x_line[y] = value
+		self._matrice[x] = x_line
 
 	def set_players_visited(self, visited):
 		self._players_visited = visited
@@ -21,24 +30,24 @@ class Game_state:
 		if self._matrice[x][y]:
 			return False
 		else:
-			self._matrice[x][y] = True
+			self._edit_matrice_value(x,y,True)
 			return True
 
 	def remove_collectable(self, x, y):
-		self._matrice[x][y] = False
+		self._edit_matrice_value(x,y,False)
 
 	def wizard_on_collectable(self, x, y):
 		return self._matrice[x][y]
 
 	def set_matrice(self, matrice):
-		self._matrice = matrice
+		self._matrice = self._manager.list(matrice)
 		print("Set matrice")
 		self.pretty_print_matrice()
 
 	def get_matrice(self):
 		print("Get matrice")
 		self.pretty_print_matrice()
-		return self._matrice
+		return list(self._matrice)
 
 	def get_player(self, ip):
 		pl = [p for p in self._players if p._ip == ip]

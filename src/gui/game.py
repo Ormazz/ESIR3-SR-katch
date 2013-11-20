@@ -18,7 +18,7 @@ class Game(object):
 
         pygame.init()
         pygame.display.set_caption("Katch")
-        self._screen = pygame.display.set_mode((1217, 600))
+        self._screen = pygame.display.set_mode((600, 460))
 
         self._player_manager = player_manager.Player_manager(self._screen)
         self._display_manager.add(self._player_manager)
@@ -74,5 +74,5 @@ class Game(object):
     def update_background(self):
         self._background.fill((255, 255, 255))
         self._screen.blit(self._background, (0, 0))
-        self._background = pygame.image.load('../img/background.jpe')
+        self._background = pygame.image.load('../img/background.png')
         self._screen.blit(self._background, (0, 0))
