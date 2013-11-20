@@ -4,7 +4,7 @@ import pygame
 import math
 import random
 
-class Katch:
+class Katch(object):
 
     instance = None
     _game_state = None

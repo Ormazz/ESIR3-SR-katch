@@ -3,7 +3,7 @@ from connection import rmi
 from control import katch
 import Pyro4
 
-class ConnectionManager:
+class ConnectionManager(object):
 
     instance = None
     _ip_list = []

@@ -1,6 +1,6 @@
 from multiprocessing import Manager
 
-class Game_state:
+class Game_state(object):
 
 	_players_visited = True
 	_players = []
