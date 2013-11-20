@@ -32,10 +32,26 @@ class Game_state:
 
 	def set_matrice(self, matrice):
 		self._matrice = matrice
+		print("Set matrice")
+		self.pretty_print_matrice()
 
 	def get_matrice(self):
+		print("Get matrice")
+		self.pretty_print_matrice()
 		return self._matrice
 
 	def get_player(self, ip):
 		pl = [p for p in self._players if p._ip == ip]
 		return pl[0]
+
+	def pretty_print_matrice(self):
+		finish = False
+		for x in range(0, len(self._matrice)):
+			for y in range(0, len(self._matrice[0])):
+				if self._matrice[x][y]:
+					print("Molololololololo " + str(x) + " " + str(y))
+					finish = True
+					pass
+
+			if finish:
+				pass
