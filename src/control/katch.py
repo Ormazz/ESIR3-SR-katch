@@ -36,7 +36,6 @@ class Katch:
         position = self._connection_manager.get_player_position(ip)
         new_player._x = position[0]
         new_player._y = position[1]
-        print("Position add " + str(position))
         self._game_state.add_player(new_player)
         self._player_manager.create_player(position[0], position[1], ip)
         if not self._player_manager._started:
@@ -44,10 +43,12 @@ class Katch:
             self._display_manager.disabled_input_box()
 
             if not self._collectable_manager.get_started():
+                print("Create own matrice")
                 self.create_collectable(self.get_collectable())
                 self._collectable_manager.set_started(True)
 
     def activate_collectable(self, ip):
+        print("get matrice " + ip)
         matrice = self._connection_manager.get_collectables(ip)
         self.create_collectable(matrice)
         self._collectable_manager.set_started(True)

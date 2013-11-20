@@ -56,10 +56,8 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
             self.wizard.set_position(self.wizard._x + self.wizard._scope, self.wizard._y)
 
     def get_player(self, ip):
-        print(ip)
         for p in self._players:
             if p._ip == ip:
-                print("player " + p._ip)
                 return p
 
     def remove_player(self, ip):
