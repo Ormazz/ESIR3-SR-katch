@@ -39,7 +39,7 @@ class Game(object):
         clock = pygame.time.Clock()
         running = True
         while running:
-            dt = clock.tick(60)
+            dt = clock.tick(10)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
