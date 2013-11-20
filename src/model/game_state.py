@@ -40,7 +40,8 @@ class Game_state:
 		return self._matrice[x][y]
 
 	def set_matrice(self, matrice):
-		self._matrice = self._manager.list(matrice)
+		for x in range(len(self._matrice)):
+			self._matrice[x] = matrice[x]
 		print("Set matrice")
 		self.pretty_print_matrice()
 
