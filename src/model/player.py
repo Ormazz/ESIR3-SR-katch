@@ -16,11 +16,13 @@ class Player:
         self._ip = ip
 
     def move(self, direction):
+        print("Position before player " + str(self._x) + " " + str(self._y))
         if direction == Player._UP:
             self._y = self._y - self._scope
         elif direction == Player._DOWN:
             self._y = self._y + self._scope
         elif direction == Player._RIGHT:
-            self._x == self._x + self._scope
+            self._x = self._x + self._scope
         elif direction == Player._LEFT:
-            self._x == self._x - self._scope
+            self._x = self._x - self._scope
+        print("Position after player " + str(self._x) + " " + str(self._y))

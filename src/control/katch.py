@@ -36,6 +36,7 @@ class Katch:
         position = self._connection_manager.get_player_position(ip)
         new_player._x = position[0]
         new_player._y = position[1]
+        print("Position add " + str(position))
         self._game_state.add_player(new_player)
         self._player_manager.create_player(position[0], position[1], ip)
         if not self._player_manager._started:

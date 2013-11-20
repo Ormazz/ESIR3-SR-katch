@@ -23,7 +23,7 @@ class ConnectionManager:
         player = katch.Katch().get_player(self._ip_serv)
         position.append(player._x)
         position.append(player._y)
-
+        print(str(position))
         return position
 
     def add_peer(self, ip):
