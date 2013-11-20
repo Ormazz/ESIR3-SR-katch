@@ -52,10 +52,10 @@ class ConnectionManager:
 
     def get_collectables(self, ip):
         network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT)) 
-        print("ConnectionManager get_collectables")
         return network.get_collectables()
 
     def get_wizard_collectables(self):
+        print("here")
         return katch.Katch().get_collectable()
 
     def leave(self):

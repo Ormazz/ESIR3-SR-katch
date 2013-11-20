@@ -43,15 +43,11 @@ class Katch:
             self._display_manager.disabled_input_box()
 
             if not self._collectable_manager.get_started():
-                print("Create own matrice")
                 self.create_collectable(self.get_collectable())
-                print(str(self.get_collectable()))
                 self._collectable_manager.set_started(True)
 
     def activate_collectable(self, ip):
-        print("get matrice " + ip)
         matrice = self._connection_manager.get_collectables(ip)
-        print(str(matrice))
         self.create_collectable(matrice)
         self._collectable_manager.set_started(True)
 
@@ -114,6 +110,7 @@ class Katch:
 
 
     def get_collectable(self):
+        print(str(game_state.Game_state().get_matrice()))
         return game_state.Game_state().get_matrice()
 
     def create_collectable(self, matrice):
