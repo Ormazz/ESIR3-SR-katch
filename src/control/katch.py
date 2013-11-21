@@ -122,6 +122,7 @@ class Katch(object):
 
     def remove_collectable(self, ip, x, y):
         game_state.Game_state().incr_score_player(ip)
+        self._game_state.set_players_visited(False)
         game_state.Game_state().remove_collectable(x, y)
         self._collectable_manager.remove_collectable(x * 23, y * 23)
 
