@@ -29,6 +29,11 @@ class Game_state(object):
 		self._players.remove(player)
 		self._players_visited = False
 
+	def incr_score_player(self, ip):
+		player = self.get_player(ip)
+		player.score = player.score + 1
+		self._players_visited = True		
+
 	def add_collectable(self, x, y):
 		if self._matrice[x][y]:
 			return False

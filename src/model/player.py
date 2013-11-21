@@ -4,7 +4,7 @@ class Player(object):
 
     _x = 0
     _y = 0
-    _score = 0
+    score = 0
     _ip = None
 
     _scope = 23
