@@ -18,7 +18,7 @@ class Game(object):
 
         pygame.init()
         pygame.display.set_caption("Katch")
-        self._screen = pygame.display.set_mode((600, 460))
+        self._screen = pygame.display.set_mode((620, 460))
 
         self._player_manager = player_manager.Player_manager(self._screen)
         self._display_manager.add(self._player_manager)

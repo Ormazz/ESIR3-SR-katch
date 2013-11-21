@@ -21,5 +21,5 @@ class Network(object):
     def remove_player(self, ip):
     	connectionManager.ConnectionManager().remove_player(ip)
 
-    def remove_collectable(self, x , y):
-        connectionManager.ConnectionManager().remove_wizard_collectable(x, y)
+    def remove_collectable(self, ip, x , y):
+        connectionManager.ConnectionManager().remove_wizard_collectable(ip, x, y)
