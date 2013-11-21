@@ -96,19 +96,22 @@ class Katch(object):
                     self._connection_manager.move_wizard(player._DOWN)
                     player.move(player._DOWN)
                     self._player_manager.wizard.down()
+                    self.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_UP and position[1] > 0:
                     self._connection_manager.move_wizard(player._UP)
                     player.move(player._UP)
                     self._player_manager.wizard.up()
+                    self.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_LEFT and position[0] > 0:
                     self._connection_manager.move_wizard(player._LEFT)
                     player.move(player._LEFT)
                     self._player_manager.wizard.left()
+                    self.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_RIGHT and position[0] < game_state.MAP_WIDTH:
                     self._connection_manager.move_wizard(player._RIGHT)
                     player.move(player._RIGHT)
                     self._player_manager.wizard.right()
-                self.check_wizard_collectable(self._player_manager.wizard)
+                    self.check_wizard_collectable(self._player_manager.wizard)
 
     def check_wizard_collectable(self, wizard):
         x = math.ceil(wizard._x / 23)
