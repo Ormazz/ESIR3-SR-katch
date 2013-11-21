@@ -92,7 +92,7 @@ class Katch(object):
             if self._player_manager.wizard_can_move(event.key):
                 player = self.get_player(self._connection_manager._ip_serv)
                 position = player.get_position()
-                if event.key == pygame.K_DOWN and position[1] < game_state.MAP_HEIGTH:
+                if event.key == pygame.K_DOWN and position[1] + 1 < game_state.MAP_HEIGTH:
                     self._connection_manager.move_wizard(player._DOWN)
                     player.move(player._DOWN)
                     self._player_manager.wizard.down()
@@ -107,7 +107,7 @@ class Katch(object):
                     player.move(player._LEFT)
                     self._player_manager.wizard.left()
                     self.check_wizard_collectable(self._player_manager.wizard)
-                if event.key == pygame.K_RIGHT and position[0] < game_state.MAP_WIDTH:
+                if event.key == pygame.K_RIGHT and position[0] + 1 < game_state.MAP_WIDTH:
                     self._connection_manager.move_wizard(player._RIGHT)
                     player.move(player._RIGHT)
                     self._player_manager.wizard.right()
