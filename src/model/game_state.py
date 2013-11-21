@@ -1,5 +1,8 @@
 from multiprocessing import Manager
 
+MAP_WIDTH = 20
+MAP_HEIGTH = 20
+
 class Game_state(object):
 
 	_players_visited = True
@@ -7,7 +10,7 @@ class Game_state(object):
 	_collectables = []
 
 	_manager = Manager()
-	_matrice = _manager.list([[False for i in range(20)] for j in range(20)])
+	_matrice = _manager.list([[False for i in range(MAP_WIDTH)] for j in range(MAP_HEIGTH)])
 
 	def _edit_matrice_value(self,x,y,value):
 		# We have to separe the line to synchronize the matrice
