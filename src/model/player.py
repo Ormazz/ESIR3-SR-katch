@@ -1,4 +1,6 @@
-class Player:
+import math
+
+class Player(object):
 
     _x = 0
     _y = 0
@@ -24,3 +26,6 @@ class Player:
             self._x = self._x + self._scope
         elif direction == Player._LEFT:
             self._x = self._x - self._scope
+
+    def get_position(self):
+        return (math.ceil(self._x / self._scope), math.ceil(self._y / self._scope))
