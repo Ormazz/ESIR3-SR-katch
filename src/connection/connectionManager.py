@@ -55,7 +55,6 @@ class ConnectionManager(object):
         return network.get_collectables()
 
     def get_wizard_collectables(self):
-        print("here")
         return katch.Katch().get_collectable()
 
     def leave(self):
@@ -68,3 +67,13 @@ class ConnectionManager(object):
         """Receive the exit message from a player. Remove it from the ips list."""
         self._ip_list.remove(ip)
         katch.Katch().remove_player(ip)
+
+    def remove_wizard_collectable(self, x, y):
+        katch.Katch().remove_collectable(x, y)
+
+    def remove_collectable(self, x, y):
+        for ip in self._ip_list:
+            network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+            network.remove_collectable(x, y)      
+
+

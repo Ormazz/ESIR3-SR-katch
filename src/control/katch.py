@@ -107,7 +107,18 @@ class Katch(object):
                     self._connection_manager.move_wizard(player._RIGHT)
                     player.move(player._RIGHT)
                     self._player_manager.wizard.right()
+                self.check_wizard_collectable(self._player_manager.wizard)
 
+    def check_wizard_collectable(self, wizard):
+        x = math.ceil(wizard._x / 23)
+        y = math.ceil(wizard._y / 23)
+        if game_state.Game_state().wizard_on_collectable(x, y):
+            self._connection_manager.remove_collectable(x, y)
+            self.remove_collectable(x, y)
+
+    def remove_collectable(self, x, y):
+        game_state.Game_state().remove_collectable(x, y)
+        self._collectable_manager.remove_collectable(x * 23, y * 23)
 
     def get_collectable(self):
         return game_state.Game_state().get_matrice()

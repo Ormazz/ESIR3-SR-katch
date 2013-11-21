@@ -17,10 +17,10 @@ class Collectable_manager(updatable.Updatable):
 		self._id = self._id + 1
 
 	def remove_collectable(self, x, y):
-		for coll in collectables:
+		for coll in self._collectables:
 			if coll._x == x and coll._y == y:
 				self._collectables.remove(coll)
-				pass
+				break
 
 	def update(self):
 		for coll in self._collectables:

@@ -40,7 +40,7 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
         for p in self._players:
             if p._x == self.wizard._x and p._y == self.wizard._y:
                 result = False
-                pass
+                break
 
         self.wizard.set_position(old_x, old_y)
         return result

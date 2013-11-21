@@ -42,12 +42,8 @@ class Game_state(object):
 	def set_matrice(self, matrice):
 		for x in range(len(self._matrice)):
 			self._matrice[x] = matrice[x]
-		print("Set matrice")
-		self.pretty_print_matrice()
 
 	def get_matrice(self):
-		print("Get matrice")
-		self.pretty_print_matrice()
 		return list(self._matrice)
 
 	def get_player(self, ip):
@@ -59,7 +55,6 @@ class Game_state(object):
 		for x in range(0, len(self._matrice)):
 			for y in range(0, len(self._matrice[0])):
 				if self._matrice[x][y]:
-					print("Molololololololo " + str(x) + " " + str(y))
 					finish = True
 					pass
 
