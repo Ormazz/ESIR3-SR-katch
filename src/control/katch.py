@@ -126,8 +126,6 @@ class Katch(object):
 
     def create_collectable(self, matrice):
         game_state.Game_state().set_matrice(matrice)
-        print("Create collectable")
-        game_state.Game_state().pretty_print_matrice()
         for x in range(0, len(matrice)):
             for y in range(0, len(matrice[x])):
                 if matrice[x][y]:
