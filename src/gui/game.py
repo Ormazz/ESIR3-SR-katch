@@ -14,12 +14,11 @@ class Game(object):
     _collectable_manager = None
 
     def __init__(self):
-        self._display_manager = display_manager.DisplayManager()
-
         pygame.init()
         pygame.display.set_caption("Katch")
         self._screen = pygame.display.set_mode((620, 460))
 
+        self._display_manager = display_manager.DisplayManager(self._screen)
         self._player_manager = player_manager.Player_manager(self._screen)
         self._display_manager.add(self._player_manager)
 
