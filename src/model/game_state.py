@@ -42,7 +42,6 @@ class Game_state(object):
 			return True
 
 	def remove_collectable(self, x, y):
-		print("REMOVE")
 		self._nb_coll.value = self._nb_coll.value - 1
 		self._edit_matrice_value(x,y,False)
 
