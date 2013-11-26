@@ -79,3 +79,6 @@ class Game_state(object):
 
 			if finish:
 				pass
+
+	def get_nb_coll(self):
+		return self._nb_coll.value
