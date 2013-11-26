@@ -3,7 +3,7 @@ from connection import connectionManager
 from gui import updatable
 from gui import gui_control
 
-class Players_layout(updatable.Updatable,gui_control.Gui_control, object):
+class PlayersLayout(updatable.Updatable,gui_control.GuiControl, object):
 
     screen = None
 

@@ -3,7 +3,7 @@ from multiprocessing import Manager
 MAP_WIDTH = 20
 MAP_HEIGTH = 20
 
-class Game_state(object):
+class GameState(object):
 
 	_players_visited = True
 	_players = []

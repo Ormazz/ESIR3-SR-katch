@@ -3,7 +3,7 @@ from gui import character
 from gui import updatable
 from gui import gui_control
 
-class Player_manager(updatable.Updatable, gui_control.Gui_control):
+class PlayerManager(updatable.Updatable, gui_control.GuiControl):
 
     wizard = None
     _started = False

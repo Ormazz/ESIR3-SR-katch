@@ -18,7 +18,7 @@ from gui import updatable
 from connection import connectionManager
 from gui import gui_control
 
-class InputBox(updatable.Updatable, gui_control.Gui_control):
+class InputBox(updatable.Updatable, gui_control.GuiControl):
 
     _current_string = []
     _question = []

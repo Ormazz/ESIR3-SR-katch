@@ -19,17 +19,17 @@ class Game(object):
         self._screen = pygame.display.set_mode((620, 460))
 
         self._display_manager = display_manager.DisplayManager(self._screen)
-        self._player_manager = player_manager.Player_manager(self._screen)
+        self._player_manager = player_manager.PlayerManager(self._screen)
         self._display_manager.add(self._player_manager)
 
-        self._collectable_manager = collectable_manager.Collectable_manager(self._screen)
+        self._collectable_manager = collectable_manager.CollectableManager(self._screen)
         self._display_manager.add(self._collectable_manager)
 
     def main(self):
         sprites = pygame.sprite.Group()
         self.create_background()
 
-        self._display_manager.add(players_layout.Players_layout(self._screen))
+        self._display_manager.add(players_layout.PlayersLayout(self._screen))
 
         input_box = inputBox.InputBox(self._screen, "IP to connect")
         self._display_manager._input_box = input_box

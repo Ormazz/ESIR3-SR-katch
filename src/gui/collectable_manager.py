@@ -2,7 +2,7 @@ from gui import updatable
 from gui import gui_control
 from gui import collectable
 
-class Collectable_manager(updatable.Updatable):
+class CollectableManager(updatable.Updatable):
 
 	_collectables = []
 	_id = 0
