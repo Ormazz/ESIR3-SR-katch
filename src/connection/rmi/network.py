@@ -3,7 +3,7 @@ from connection import connectionManager
 class Network(object):
 
     def get_player_information(self):
-        return connectionManager.ConnectionManager().get_current_informtion()
+        return connectionManager.ConnectionManager().get_current_information()
 
     def get_ip_list(self):
         return connectionManager.ConnectionManager()._ip_list
