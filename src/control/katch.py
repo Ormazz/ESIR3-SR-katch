@@ -121,17 +121,15 @@ class Katch(object):
             self._connection_manager.remove_collectable(x, y)
             self.remove_collectable(self._connection_manager._ip_serv, x, y)
 
+            if game_state.Game_state().get_nb_coll() == 0:
+                self._connection_manager.wizard_finish_game()
+                self.finish_game()
+
     def remove_collectable(self, ip, x, y):
         game_state.Game_state().incr_score_player(ip)
         self._game_state.set_players_visited(False)
         game_state.Game_state().remove_collectable(x, y)
         self._collectable_manager.remove_collectable(x * 23, y * 23)
-        print("Remove")
-        if game_state.Game_state().get_nb_coll() == 0:
-            self._player_manager.deactivate_player()
-            self._display_manager.launch_fireworks()
-
-        print(str(game_state.Game_state().get_nb_coll()))
 
     def get_collectable(self):
         return game_state.Game_state().get_matrice()
@@ -167,3 +165,7 @@ class Katch(object):
         self._game_state.remove_player(self._game_state.get_player(ip))
         # Removing from the interface
         self._player_manager.remove_player(ip)
+
+    def finish_game(self):
+        self._player_manager.deactivate_player()
+        self._display_manager.launch_fireworks()

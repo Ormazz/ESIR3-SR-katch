@@ -22,3 +22,6 @@ class Network(object):
 
     def remove_collectable(self, ip, x , y):
         connectionManager.ConnectionManager().remove_wizard_collectable(ip, x, y)
+
+    def finish_game():
+        return connectionManager.ConnectionManager().finish_game()
