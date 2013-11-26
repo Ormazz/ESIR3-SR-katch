@@ -41,9 +41,6 @@ class Game_state(object):
 			self._edit_matrice_value(x,y,True)
 			return True
 
-	def set_collectable(self, val):
-		self._nb_coll.value = val
-
 	def remove_collectable(self, x, y):
 		self._nb_coll.value = self._nb_coll.value - 1
 		self._edit_matrice_value(x,y,False)
@@ -54,6 +51,16 @@ class Game_state(object):
 	def set_matrice(self, matrice):
 		for x in range(len(self._matrice)):
 			self._matrice[x] = matrice[x]
+		self.calculate_coll()
+
+	def calculate_coll(self):
+		nb = 0
+		for x in range(0, len(self._matrice)):
+			for y in range(0, len(self._matrice[0])):
+				if self._matrice[x][y]:
+					nb = nb + 1
+
+		self._nb_coll.value = nb
 
 	def get_matrice(self):
 		return list(self._matrice)
@@ -72,6 +79,3 @@ class Game_state(object):
 
 			if finish:
 				pass
-
-	def get_nb_coll(self):
-		return self._nb_coll.value

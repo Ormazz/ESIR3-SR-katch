@@ -38,7 +38,6 @@ class Katch(object):
         new_player._y = inf[1]
         new_player.score = inf[2]
 
-        self._game_state.set_collectable(inf[3])
         self._game_state.add_player(new_player)
         self._player_manager.create_player(inf[0], inf[1], ip)
         if not self._player_manager._started:
@@ -126,6 +125,9 @@ class Katch(object):
             if game_state.Game_state().get_nb_coll() == 0:
                 self._connection_manager.wizard_finish_game()
                 self.finish_game()
+
+            print("Remove")
+            print(str(self.game_state.Game_state().get_nb_coll()))
 
     def remove_collectable(self, ip, x, y):
         game_state.Game_state().incr_score_player(ip)
