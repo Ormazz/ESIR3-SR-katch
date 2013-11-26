@@ -18,7 +18,7 @@ class Players_layout(updatable.Updatable,gui_control.Gui_control, object):
         self.screen.blit(label, (x, y))
 
     def clean_list(self):
-        pygame.draw.rect(self.screen, pygame.Color("white"), pygame.Rect(self.screen.get_width() - 135, 0, 320, 460))
+        pygame.draw.rect(self.screen, pygame.Color("white"), pygame.Rect(self.screen.get_width() - 155, 0, 320, 460))
 
     def update(self):
         if self._katch.players_has_changed() is True:
