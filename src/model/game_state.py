@@ -11,6 +11,7 @@ class Game_state(object):
 
 	_manager = Manager()
 	_matrice = _manager.list([[False for i in range(MAP_WIDTH)] for j in range(MAP_HEIGTH)])
+	_nb_coll = _manager.Value('i', 10)
 
 	def _edit_matrice_value(self,x,y,value):
 		# We have to separe the line to synchronize the matrice
@@ -41,6 +42,7 @@ class Game_state(object):
 			return True
 
 	def remove_collectable(self, x, y):
+		self._nb_coll.value = self._nb_coll.value - 1
 		self._edit_matrice_value(x,y,False)
 
 	def wizard_on_collectable(self, x, y):
@@ -67,3 +69,6 @@ class Game_state(object):
 
 			if finish:
 				pass
+
+	def get_nb_coll(self):
+		return self._nb_coll.value

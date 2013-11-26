@@ -125,6 +125,9 @@ class Katch(object):
         self._game_state.set_players_visited(False)
         game_state.Game_state().remove_collectable(x, y)
         self._collectable_manager.remove_collectable(x * 23, y * 23)
+        if game_state.Game_state().get_nb_coll() == 0:
+            self._player_manager.deactivate_player()
+            self._display_manager.launch_fireworks()
 
     def get_collectable(self):
         return game_state.Game_state().get_matrice()

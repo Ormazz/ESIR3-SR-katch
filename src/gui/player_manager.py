@@ -19,9 +19,11 @@ class Player_manager(updatable.Updatable, gui_control.Gui_control):
     def update(self):
         if self._started:
             self.wizard.update()
+            for player in self._players:
+                player.update()
 
-        for player in self._players:
-            player.update()
+    def deactivate_player(self):
+        self._started = False
 
     def activate_player(self, x, y, ip):
         self.wizard = character.Character(self._screen, "../img/wizard.png", x, y, ip)
