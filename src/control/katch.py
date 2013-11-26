@@ -127,7 +127,7 @@ class Katch(object):
                 self.finish_game()
 
             print("Remove")
-            print(str(self.game_state.Game_state().get_nb_coll()))
+            print(str(game_state.Game_state().get_nb_coll()))
 
     def remove_collectable(self, ip, x, y):
         game_state.Game_state().incr_score_player(ip)
