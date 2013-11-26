@@ -16,7 +16,7 @@ class ConnectionManager(object):
 
     def get_player_information(self, ip):
         network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
-        return network.get_player_position()
+        return network.get_player_information()
 
     def get_current_information(self):
         inf = []
