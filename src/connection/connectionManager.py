@@ -24,6 +24,7 @@ class ConnectionManager(object):
         inf.append(player._x)
         inf.append(player._y)
         inf.append(player.score)
+        inf.append(katch.Katch().get_nb_collectables())
         return inf
 
     def add_peer(self, ip):

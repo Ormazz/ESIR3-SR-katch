@@ -37,6 +37,8 @@ class Katch(object):
         new_player._x = inf[0]
         new_player._y = inf[1]
         new_player.score = inf[2]
+
+        self._game_state.set_collectable(inf[3])
         self._game_state.add_player(new_player)
         self._player_manager.create_player(inf[0], inf[1], ip)
         if not self._player_manager._started:
@@ -169,3 +171,6 @@ class Katch(object):
     def finish_game(self):
         self._player_manager.deactivate_player()
         self._display_manager.launch_fireworks()
+
+    def get_nb_collectables(self):
+        return game_state.Game_state().get_nb_coll()
