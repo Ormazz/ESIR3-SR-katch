@@ -35,6 +35,9 @@ class Game(object):
         self._display_manager._input_box = input_box
         self._display_manager.add(input_box)
 
+        sound = pygame.mixer.Sound("../music/katch.ogg")
+        sound.play(-1)
+
         clock = pygame.time.Clock()
         running = True
         while running:
