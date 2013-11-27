@@ -10,22 +10,22 @@ class Player(object):
 
     _scope = 23
 
-    _UP = 0
-    _DOWN = 1
-    _LEFT = 2
-    _RIGHT = 3
+    UP = 0
+    DOWN = 1
+    LEFT = 2
+    RIGHT = 3
 
     def __init__(self, ip):
         self._ip = ip
 
     def move(self, direction):
-        if direction == Player._UP:
+        if direction == Player.UP:
             self._y = self._y - self._scope
-        elif direction == Player._DOWN:
+        elif direction == Player.DOWN:
             self._y = self._y + self._scope
-        elif direction == Player._RIGHT:
+        elif direction == Player.RIGHT:
             self._x = self._x + self._scope
-        elif direction == Player._LEFT:
+        elif direction == Player.LEFT:
             self._x = self._x - self._scope
 
     def get_position(self):

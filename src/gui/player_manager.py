@@ -6,7 +6,7 @@ from gui import gui_control
 class PlayerManager(updatable.Updatable, gui_control.GuiControl):
 
     wizard = None
-    _started = False
+    started = False
     _players = []
     _screen = None
 
@@ -17,18 +17,18 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
         self._katch.move_wizard(event)
 
     def update(self):
-        if self._started:
+        if self.started:
             self.wizard.update()
             for player in self._players:
                 player.update()
 
     def deactivate_player(self):
-        self._started = False
+        self.started = False
 
     def activate_player(self, x, y, ip):
         self.wizard = character.Character(self._screen, "../img/wizard.png", x, y, ip)
         self.wizard.set_position(x, y)
-        self._started = True
+        self.started = True
 
     def create_player(self, x, y, ip):
         self._players.append(character.Character(self._screen, "../img/player.png", x, y, ip))
@@ -43,7 +43,6 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
             if p._x == self.wizard._x and p._y == self.wizard._y:
                 result = False
                 break
-
         self.wizard.set_position(old_x, old_y)
         return result
 
@@ -66,4 +65,7 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
         """Remove a player from the GUI"""
         player = self.get_player(ip)
         self._players.remove(player)
+
+    def get_started(self):
+        return self.started
 

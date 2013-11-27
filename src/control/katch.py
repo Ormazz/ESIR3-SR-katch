@@ -1,8 +1,7 @@
 from model import game_state
 from model import player
+from control import collectable_stack
 import pygame
-import math
-import random
 
 class Katch(object):
 
@@ -12,6 +11,8 @@ class Katch(object):
     _player_manager = None
     _display_manager = None
     _collectable_manager = None
+
+    _collectable_stack = None
 
     def __new__(my_class):
         if my_class.instance is None:
@@ -28,8 +29,9 @@ class Katch(object):
         new_player._y = 0
         self._game_state.add_player(new_player)
         self._collectable_manager = collectable_manager
+        self._collectable_stack = collectable_stack.CollectableStack(self._game_state, connection_manager, collectable_manager)
 
-        self.generate_collectable()
+        self._collectable_stack.generate_collectable()
 
     def add_player(self, ip):
         "Add a new player, the ip is the id"
@@ -50,8 +52,8 @@ class Katch(object):
         #If the game isn't started (ie: first connection to a player)
         #We create the player character (wizard)
         #And we disable the input box where the ip is writed
-        if not self._player_manager._started:
-            self.activate_player(self._connection_manager._ip_serv)
+        if not self._player_manager.get_started():
+            self.activate_player(self._connection_manager.get_ip_serv())
             self._display_manager.disabled_input_box()
 
             #Create the fez spiders in the model and on the screen
@@ -59,17 +61,9 @@ class Katch(object):
                 self.create_collectable(self.get_collectable())
                 self._collectable_manager.set_started(True)
 
-    def activate_collectable(self, ip):
-
-        #Get the spiders of the other player
-        #Set the matrice and create the spiders on the players screen
-        matrice = self._connection_manager.get_collectables(ip)
-        self.create_collectable(matrice)
-        self._collectable_manager.set_started(True)
-
     def connection_to_peer(self, ip):
         #Get the spiders of the player and create them
-        self.activate_collectable(ip)
+        self._collectable_stack.activate_collectable(ip)
 
         #Connect to a peer
         self._connection_manager.connection_to_peer(ip)
@@ -84,7 +78,7 @@ class Katch(object):
 
     def players_has_changed(self):
         "Tell if the player and score list changed"
-        return not self._game_state._players_visited
+        return not self._game_state.get_players_visited()
 
     def get_players(self):
         "Get the players"
@@ -102,86 +96,54 @@ class Katch(object):
 
         #Get the graphical character
         character = self._player_manager.get_player(ip)
-        if direction == player._DOWN:
-            player.move(player._DOWN)
+        if direction == player.DOWN:
+            player.move(player.DOWN)
             character.down()
-        if direction == player._UP:
-            player.move(player._UP)
+        if direction == player.UP:
+            player.move(player.UP)
             character.up()
-        if direction == player._LEFT:
-            player.move(player._LEFT)
+        if direction == player.LEFT:
+            player.move(player.LEFT)
             character.left()
-        if direction == player._RIGHT:
-            player.move(player._RIGHT)
+        if direction == player.RIGHT:
+            player.move(player.RIGHT)
             character.right()
 
     def move_wizard(self, event):
-        if self._player_manager._started :
+        if self._player_manager.get_started() :
             if self._player_manager.wizard_can_move(event.key):
-                player = self.get_player(self._connection_manager._ip_serv)
+                player = self.get_player(self._connection_manager.get_ip_serv())
                 position = player.get_position()
                 if event.key == pygame.K_DOWN and position[1] + 1 < game_state.MAP_HEIGTH:
-                    self._connection_manager.move_wizard(player._DOWN)
-                    player.move(player._DOWN)
+                    self._connection_manager.move_wizard(player.DOWN)
+                    player.move(player.DOWN)
                     self._player_manager.wizard.down()
-                    self.check_wizard_collectable(self._player_manager.wizard)
+                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_UP and position[1] > 0:
-                    self._connection_manager.move_wizard(player._UP)
-                    player.move(player._UP)
+                    self._connection_manager.move_wizard(player.UP)
+                    player.move(player.UP)
                     self._player_manager.wizard.up()
-                    self.check_wizard_collectable(self._player_manager.wizard)
+                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_LEFT and position[0] > 0:
-                    self._connection_manager.move_wizard(player._LEFT)
-                    player.move(player._LEFT)
+                    self._connection_manager.move_wizard(player.LEFT)
+                    player.move(player.LEFT)
                     self._player_manager.wizard.left()
-                    self.check_wizard_collectable(self._player_manager.wizard)
+                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_RIGHT and position[0] + 1 < game_state.MAP_WIDTH:
                     self._connection_manager.move_wizard(player._RIGHT)
                     player.move(player._RIGHT)
                     self._player_manager.wizard.right()
-                    self.check_wizard_collectable(self._player_manager.wizard)
-
-    def check_wizard_collectable(self, wizard):
-        x = math.ceil(wizard._x / 23)
-        y = math.ceil(wizard._y / 23)
-        if self._game_state.wizard_on_collectable(x, y):
-            self._connection_manager.remove_collectable(x, y)
-            self.remove_collectable(self._connection_manager._ip_serv, x, y)
-
-            if self._game_state.get_nb_coll() == 0:
-                self._connection_manager.wizard_finish_game()
-                self.finish_game()
+                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
 
     def remove_collectable(self, ip, x, y):
-        self._game_state.incr_score_player(ip)
-        self._game_state.set_players_visited(False)
-        self._game_state.remove_collectable(x, y)
-        self._collectable_manager.remove_collectable(x * 23, y * 23)
+        self._collectable_stack.remove_collectable(ip, x, y)
 
     def get_collectable(self):
         return self._game_state.get_matrice()
 
-    def create_collectable(self, matrice):
-        self._game_state.set_matrice(matrice)
-        for x in range(0, len(matrice)):
-            for y in range(0, len(matrice[x])):
-                if matrice[x][y]:
-                    self._collectable_manager.create_collectable(x*23, y*23)
-
-    def generate_collectable(self):
-        matrice = self._game_state.get_matrice()
-        for i in range(0, 10):
-            x = math.ceil(random.random() * 19)
-            y = math.ceil(random.random() * 19)
-
-            if matrice[x][y]:
-                i = i - 1
-            else:
-                self._game_state.add_collectable(x,y)
-
     def leave(self):
         """Local exit method ; Alert the other players that we are not connected anymore"""
-        if self._player_manager._started:
+        if self._player_manager.get_started():
             self._connection_manager.leave()
 
     def remove_player(self,ip):
@@ -193,8 +155,8 @@ class Katch(object):
         self._player_manager.remove_player(ip)
 
     def finish_game(self):
+        #Deactive the players on th screen
         self._player_manager.deactivate_player()
-        self._display_manager.launch_fireworks()
 
-    def get_nb_collectables(self):
-        return self._game_state.get_nb_coll()
+        #Launch the fireworks
+        self._display_manager.launch_fireworks()
