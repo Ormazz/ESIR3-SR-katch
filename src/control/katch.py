@@ -58,7 +58,7 @@ class Katch(object):
 
             #Create the fez spiders in the model and on the screen
             if not self._collectable_manager.get_started():
-                self.create_collectable(self.get_collectable())
+                self._collectable_stack.create_collectable(self.get_collectable())
                 self._collectable_manager.set_started(True)
 
     def connection_to_peer(self, ip):
