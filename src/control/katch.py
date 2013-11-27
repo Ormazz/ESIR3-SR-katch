@@ -130,8 +130,8 @@ class Katch(object):
                     self._player_manager.wizard.left()
                     self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_RIGHT and position[0] + 1 < game_state.MAP_WIDTH:
-                    self._connection_manager.move_wizard(player._RIGHT)
-                    player.move(player._RIGHT)
+                    self._connection_manager.move_wizard(player.RIGHT)
+                    player.move(player.RIGHT)
                     self._player_manager.wizard.right()
                     self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
 
