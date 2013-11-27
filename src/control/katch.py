@@ -29,7 +29,7 @@ class Katch(object):
         new_player._y = 0
         self._game_state.add_player(new_player)
         self._collectable_manager = collectable_manager
-        self._collectable_stack = collectable_stack.CollectableStack(self._game_state, connection_manager, collectable_manager)
+        self._collectable_stack = collectable_stack.CollectableStack(self._game_state, connection_manager, collectable_manager, self)
 
         self._collectable_stack.generate_collectable()
 

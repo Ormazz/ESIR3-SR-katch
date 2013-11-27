@@ -6,11 +6,13 @@ class CollectableStack(object):
     _game_state = None
     _connection_manager = None
     _collectable_manager = None
+    _katch = None
 
-    def __init__(self, game_state, connection_manager, collectable_manager):
+    def __init__(self, game_state, connection_manager, collectable_manager, katch):
         self._game_state = game_state
         self._connection_manager = connection_manager
         self._collectable_manager = collectable_manager
+        self._katch = katch
 
     def activate_collectable(self, ip):
         #Get the spiders of the other player
@@ -28,7 +30,7 @@ class CollectableStack(object):
 
             if self._game_state.get_nb_coll() == 0:
                 self._connection_manager.wizard_finish_game()
-                self.finish_game()
+                self._katch.finish_game()
 
     def remove_collectable(self, ip, x, y):
         self._game_state.incr_score_player(ip)
