@@ -2,6 +2,7 @@ from gui import updatable
 import pygame
 
 class Fireworks(updatable.Updatable):
+    """A purple ball moving up until exploding."""
 
     _screen = None
     _sprite = None

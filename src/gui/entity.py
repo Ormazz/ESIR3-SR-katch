@@ -2,6 +2,14 @@ import pygame
 from gui import updatable
 
 class Entity(updatable.Updatable):
+    """Each object in the game is an entity. It has a sprite, and an animation of two frames.
+
+    Members :
+        * sprite : picture representing currently the entity
+        * screen : display zone where the entity is printed
+        * x, y : position
+        * next_image : picture to print on the next update
+    """
 
     _sprite = None
     _screen = None
@@ -11,6 +19,7 @@ class Entity(updatable.Updatable):
     _next_image = None
 
     def init(self, screen, image, x, y):
+        """Set the entity attributes, and print it in the game display"""
         self._sprite = pygame.sprite.Sprite()
         surface = pygame.image.load(image).convert()
         self._surface = surface
@@ -29,6 +38,7 @@ class Entity(updatable.Updatable):
 
 
     def update(self):
+        """Switch to the next picture for the animation"""
         tmp_image = self._sprite.image
         self._sprite.image = self._next_image
         self._next_image = tmp_image

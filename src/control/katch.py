@@ -178,7 +178,7 @@ class Katch(object):
 
     def get_collectable(self):
         """Return the collectables' matrix"""
-        return self._game_state.get_matrice()
+        return self._game_state.get_matrix()
 
     def leave(self):
         """Local exit method ; Alert the other players that we are not connected anymore"""

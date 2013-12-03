@@ -1,6 +1,14 @@
 import math
 
 class Player(object):
+    """Player in the game. Has a position, and a score.
+
+    Members :
+        * x : lateral position
+        * y : vertical position
+        * score : number of collectable the player has obtained
+        * scope : size of a case
+    """
 
     _x = 0
     _y = 0
@@ -19,6 +27,7 @@ class Player(object):
         self._ip = ip
 
     def move(self, direction):
+        """Moves the player's position in the given direction"""
         if direction == Player.UP:
             self._y = self._y - self._scope
         elif direction == Player.DOWN:

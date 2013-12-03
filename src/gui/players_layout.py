@@ -1,9 +1,9 @@
 import pygame
-from connection import connectionManager
 from gui import updatable
 from gui import gui_control
 
 class PlayersLayout(updatable.Updatable,gui_control.GuiControl, object):
+    """Layout were players are displayed"""
 
     screen = None
 
