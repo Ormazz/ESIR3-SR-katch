@@ -4,14 +4,27 @@ from gui import game
 from control import katch
 from connection import server,client,connectionManager
 import urllib.request
+import sys
 
-ip = "192.168.0.22"
+# Launch of the game
 
+# Retrieving the local ip from the outside
+ip = sys.argv[1]
+
+# Initializing the game and its component
 connectionManager.ConnectionManager()._ip_serv = ip
 myGame = game.Game()
-katch.Katch().init(connectionManager.ConnectionManager(), myGame.get_player_manager(), myGame.get_display_manager())
+katch.Katch().init(connectionManager.ConnectionManager(), myGame.get_player_manager(), myGame.get_display_manager(), myGame.get_collectable_manager())
 
+# Launching the server in another thread
 t = threading.Thread(target=server.create_server, args=(ip,))
 t.start()
-#time.sleep(2)
+
+# Launching the game
 myGame.main()
+
+# When the game has stopped, we have to send a message to other players
+katch.Katch().leave()
+
+# Shutting down the server
+t._stop()
