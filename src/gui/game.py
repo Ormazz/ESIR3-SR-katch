@@ -25,7 +25,7 @@ class Game(object):
         # Launches pygame windows
         pygame.init()
         pygame.display.set_caption("Katch")
-        self._screen = pygame.display.set_mode((620, 460))
+        self._screen = pygame.display.set_mode((680, 460))
 
         # Creates the managers
         self._display_manager = display_manager.DisplayManager(self._screen)

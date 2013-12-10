@@ -1,9 +1,7 @@
 import threading
-import time
 from gui import game
 from control import katch
-from connection import server,client,connectionManager
-import urllib.request
+from connection import server,connectionManager
 import sys
 
 # Launch of the game

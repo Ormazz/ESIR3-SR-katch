@@ -27,7 +27,7 @@ class ConnectionManager(object):
     def get_player_information(self, ip):
         """Obtain position and score of the player given by its ip."""
         # We ask the player's RMI the informations we neeed
-        network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+        network = self.get_network(ip)
         return network.get_player_information()
 
     def get_current_information(self):
@@ -50,7 +50,7 @@ class ConnectionManager(object):
         """Connection to an existing network by an ip. This will allow us to connect with every other players.
         Notice that this is a recursive method. It calls every players until we know them all."""
         # Getting the other player's RMI
-        network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip_addr + ":" + str(connection.DEFAULT_PORT))
+        network = self.get_network(ip_addr)
         # We give our own ip to that player, so that he knows us
         network.add_ip(self._ip_serv)
 
@@ -71,7 +71,7 @@ class ConnectionManager(object):
         """Inquires other player to move our wizard in the given direction."""
         for ip in self._ip_list:
             # For all players, we get their RMI, and move the player that have our ip
-            network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+            network = self.get_network(ip)
             network.move_player(self._ip_serv, direction)
 
     def move_player(self, ip, direction):
@@ -80,7 +80,7 @@ class ConnectionManager(object):
 
     def get_collectables(self, ip):
         """Obtains the collectables' matrix from a player"""
-        network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+        network = self.get_network(ip)
         return network.get_collectables()
 
     def remove_wizard_collectable(self, ip, x, y):
@@ -90,7 +90,7 @@ class ConnectionManager(object):
     def remove_collectable(self, x, y):
         """Inform other players that our wizard has taken a collectable"""
         for ip in self._ip_list:
-            network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+            network = self.get_network(ip)
             network.remove_collectable(self._ip_serv, x, y)
 
     def get_wizard_collectables(self):
@@ -100,7 +100,7 @@ class ConnectionManager(object):
     def leave(self):
         """Alerts the other players that we are leaving the game"""
         for ip in self._ip_list:
-            network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+            network = self.get_network(ip)
             network.remove_player(self._ip_serv)
 
     def remove_player(self, ip):
@@ -111,9 +111,12 @@ class ConnectionManager(object):
     def wizard_finish_game(self):
         """Informs other players that we have taken the last collectable, and that the game is finished."""
         for ip in self._ip_list:
-            network = Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip + ":" + str(connection.DEFAULT_PORT))
+            network = self.get_network(ip)
             network.finish_game()
 
     def finish_game(self):
         """End the game"""
         katch.Katch().finish_game()
+
+    def get_network(self, ip):
+        return Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip)

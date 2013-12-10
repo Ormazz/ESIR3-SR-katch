@@ -7,9 +7,11 @@ def create_server(ip):
     # RMI creation
     network_inst = network.Network()
     print(ip)
+    tab = str.split(ip, ":")
     # Server creation
     Pyro4.Daemon.serveSimple(
         {network_inst:connection.URI_CONNECTION},
-        host=ip,
+        host=tab[0],
         ns=False,
-        port=connection.DEFAULT_PORT)
+        port=int(tab[1])
+        )

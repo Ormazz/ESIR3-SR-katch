@@ -9,7 +9,7 @@ class PlayersLayout(updatable.Updatable,gui_control.GuiControl, object):
 
     def __init__(self, screen):
         self.screen = screen
-        self.draw("Players", 16, screen.get_width() - 114, 10)
+        self.draw("Players", 16, screen.get_width() - 185, 10)
 
 
     def draw(self, text, size, x, y):
@@ -18,14 +18,14 @@ class PlayersLayout(updatable.Updatable,gui_control.GuiControl, object):
         self.screen.blit(label, (x, y))
 
     def clean_list(self):
-        pygame.draw.rect(self.screen, pygame.Color("white"), pygame.Rect(self.screen.get_width() - 155, 0, 320, 460))
+        pygame.draw.rect(self.screen, pygame.Color("white"), pygame.Rect(self.screen.get_width() - 200, 0, 420, 460))
 
     def update(self):
         if self._katch.players_has_changed() is True:
             self.clean_list()
-            self.draw("Players", 16, self.screen.get_width() - 114, 10)
+            self.draw("Players", 16, self.screen.get_width() - 185, 10)
             y = 40
             for p in self._katch.get_players():
-                self.draw(p._ip + "   " + str(p.score), 14, self.screen.get_width() - 150, y)
+                self.draw(p._ip + "   " + str(p.score), 14, self.screen.get_width() - 190, y)
                 y += 20
             self._katch.visit_players(True)
