@@ -8,7 +8,7 @@ import socket
 # Launch of the game
 
 # Retrieving the local ip from the outside
-if len(sys.argv) < 1:
+if len(sys.argv) < 2:
 	print("Please give the port you wish to use for the server!")
 else:
 	port = sys.argv[1]
