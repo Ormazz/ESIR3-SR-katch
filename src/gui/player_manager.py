@@ -18,9 +18,11 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
     started = False
     _players = []
     _screen = None
+    _players_layout = None
 
-    def __init__(self, screen):
+    def __init__(self, screen, _players_layout):
         self._screen = screen
+        self._players_layout = _players_layout
 
     def event(self, event):
         """Reacts to a given event"""
@@ -45,10 +47,18 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
         self.wizard = character.Character(self._screen, "../img/wizard.png", x, y, ip)
         self.wizard.set_position(x, y)
         self.started = True
+        self.set_score_player(ip, 0)
 
-    def create_player(self, x, y, ip):
+    def create_player(self, x, y, ip, score):
         """Create a new player"""
         self._players.append(character.Character(self._screen, "../img/player.png", x, y, ip))
+        self.set_score_player(ip, score)
+
+    def set_score_player(self, ip, score):
+        self._players_layout.set_score_player(ip, score)
+
+    def incr_score_player(self, ip):
+        self._players_layout.incr_score_player(ip)
 
     def wizard_can_move(self, direction):
         """Tells if the local player collides with another player if he goes in that direction. If this is the case, he won't move."""
@@ -91,6 +101,7 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
         """Remove a player from the GUI"""
         player = self.get_player(ip)
         self._players.remove(player)
+        self._players_layout.remove_player(ip)
 
     def get_started(self):
         return self.started

@@ -15,11 +15,13 @@ class CollectableStack(object):
     _connection_manager = None
     _collectable_manager = None
     _katch = None
+    _player_manager = None
 
-    def __init__(self, game_state, connection_manager, collectable_manager, katch):
+    def __init__(self, game_state, connection_manager, collectable_manager, player_manager, katch):
         self._game_state = game_state
         self._connection_manager = connection_manager
         self._collectable_manager = collectable_manager
+        self._player_manager = player_manager
         self._katch = katch
 
     def activate_collectable(self, ip):
@@ -53,7 +55,7 @@ class CollectableStack(object):
         # The player obtain one point
         self._game_state.incr_score_player(ip)
         # The gui has to update scores
-        self._game_state.set_players_visited(False)
+        self._player_manager.incr_score_player(ip)
         # Removing the collectable from the model and the gui
         self._game_state.remove_collectable(x, y)
         self._collectable_manager.remove_collectable(x * 23, y * 23)

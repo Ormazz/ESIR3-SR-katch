@@ -1,16 +1,15 @@
 import pygame
 from gui import updatable
-from gui import gui_control
 
-class PlayersLayout(updatable.Updatable,gui_control.GuiControl, object):
+class PlayersLayout(updatable.Updatable, object):
     """Layout were players are displayed"""
 
     screen = None
+    _players_score = {}
+
 
     def __init__(self, screen):
         self.screen = screen
-        self.draw("Players", 16, screen.get_width() - 185, 10)
-
 
     def draw(self, text, size, x, y):
         font = pygame.font.SysFont("Arial", size)
@@ -20,12 +19,33 @@ class PlayersLayout(updatable.Updatable,gui_control.GuiControl, object):
     def clean_list(self):
         pygame.draw.rect(self.screen, pygame.Color("white"), pygame.Rect(self.screen.get_width() - 200, 0, 420, 460))
 
+    def remove_player(self, ip):
+        del self._players_score[ip]
+
+    def set_score_player(self, ip, score):
+        self._players_score[ip] = score
+
+    def incr_score_player(self, ip):
+        if ip in self._players_score:
+            self._players_score[ip] = self._players_score[ip] + 1
+        else:
+            self._players_score[ip] = 0
+
     def update(self):
-        if self._katch.players_has_changed() is True:
-            self.clean_list()
-            self.draw("Players", 16, self.screen.get_width() - 185, 10)
-            y = 40
-            for p in self._katch.get_players():
-                self.draw(p._ip + "   " + str(p.score), 14, self.screen.get_width() - 190, y)
-                y += 20
-            self._katch.visit_players(True)
+        self.clean_list()
+        self.draw("Players", 16, self.screen.get_width() - 185, 10)
+        y = 40
+        for p in self._players_score:
+            self.draw(p + "   " + str(self._players_score[p]), 14, self.screen.get_width() - 190, y)
+            y += 20
+
+
+    # def update(self):
+    #     if self._katch.players_has_changed() is True:
+    #         self.clean_list()
+    #         self.draw("Players", 16, self.screen.get_width() - 185, 10)
+    #         y = 40
+    #         for p in self._katch.get_players():
+    #             self.draw(p._ip + "   " + str(p.score), 14, self.screen.get_width() - 190, y)
+    #             y += 20
+    #         self._katch.visit_players(True)
