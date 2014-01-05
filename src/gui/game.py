@@ -27,11 +27,17 @@ class Game(object):
         pygame.display.set_caption("Katch")
         self._screen = pygame.display.set_mode((680, 460))
 
+        #Creates player layout
+        play_layout = players_layout.PlayersLayout(self._screen)
+
         # Creates the managers
         self._display_manager = display_manager.DisplayManager(self._screen)
-        self._player_manager = player_manager.PlayerManager(self._screen)
+        self._player_manager = player_manager.PlayerManager(self._screen, play_layout)
         self._display_manager.add(self._player_manager)
         self._collectable_manager = collectable_manager.CollectableManager(self._screen)
+
+        # Adds the player layout to the display
+        self._display_manager.add(play_layout)
 
         # The display manager must be connected to the collectable manager
         self._display_manager.add(self._collectable_manager)
@@ -46,9 +52,6 @@ class Game(object):
         # Displays the background
         sprites = pygame.sprite.Group()
         self.create_background()
-
-        # Adds the player layout to the display
-        self._display_manager.add(players_layout.PlayersLayout(self._screen))
 
         # Print the IP box ; The user has to enter an ip to connect, or wait for another player to connect, before starting playing
         input_box = inputBox.InputBox(self._screen, "IP to connect")

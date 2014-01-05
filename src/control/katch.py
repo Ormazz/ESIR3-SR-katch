@@ -10,7 +10,6 @@ class Katch(object):
     """
     Katch main class. This class is the head of the control, making all the decisions.
     The main method, though, is actually in the gui. Indeed, it is this that detects the event, and call the control.
-    The gui thus regularly check if values from the control has been "visited" by it, meaning if there is something new it should update.
 
     Members :
         * instance : static value pointing to the singleton
@@ -28,7 +27,6 @@ class Katch(object):
     _player_manager = None
     _display_manager = None
     _collectable_manager = None
-
     _collectable_stack = None
 
     def __new__(my_class):
@@ -56,7 +54,7 @@ class Katch(object):
         self._game_state.add_player(wizard)
 
         # Initiates the collectables
-        self._collectable_stack = collectable_stack.CollectableStack(self._game_state, connection_manager, collectable_manager, self)
+        self._collectable_stack = collectable_stack.CollectableStack(self._game_state, connection_manager, collectable_manager, player_manager, self)
         self._collectable_stack.generate_collectable()
 
     def add_player(self, ip):
@@ -73,7 +71,7 @@ class Katch(object):
         self._game_state.add_player(new_player)
 
         #Create the player on the screen
-        self._player_manager.create_player(inf[0], inf[1], ip)
+        self._player_manager.create_player(inf[0], inf[1], ip, inf[2])
 
         #If the game isn't started (ie: first connection to a player)
         #We create the player character (wizard)
@@ -98,14 +96,6 @@ class Katch(object):
     def activate_player(self, ip):
         "Creates the local player character (wizard) on the screen"
         self._player_manager.activate_player(0, 0, ip)
-
-    def visit_players(self, visit):
-        "Tell if The player and score list is visited by the gui."
-        self._game_state.set_players_visited(visit)
-
-    def players_has_changed(self):
-        "Tell if the player and score list has changed"
-        return not self._game_state.get_players_visited()
 
     def get_players(self):
         "Get the players list"

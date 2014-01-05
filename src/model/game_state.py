@@ -14,8 +14,6 @@ class GameState(object):
         * matrix : positions of the collectables on the map
         * nb_coll : number of collectables remaining
     """
-
-    _players_visited = True
     _players = []
     # _collectables = []
 
@@ -37,14 +35,10 @@ class GameState(object):
     def add_player(self, player):
         """Adds a new player to the list"""
         self._players.append(player)
-        # Since we have changed the list of player, it has to be visited by the GUI
-        self._players_visited = False
 
     def remove_player(self, player):
         """Removes a player from the list"""
         self._players.remove(player)
-        # Since we have changed the list of player, it has to be visited by the GUI
-        self._players_visited = False
 
     def incr_score_player(self, ip):
         """Increments one player's score by one. The player is identified by its ip."""
@@ -109,6 +103,3 @@ class GameState(object):
 
     def get_nb_coll(self):
         return self._nb_coll.value
-
-    def get_players_visited(self):
-        return self._players_visited
