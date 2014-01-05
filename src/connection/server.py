@@ -6,7 +6,6 @@ def create_server(ip):
     """Instanciates a RMI server"""
     # RMI creation
     network_inst = network.Network()
-    print(ip)
     tab = str.split(ip, ":")
     # Server creation
     Pyro4.Daemon.serveSimple(

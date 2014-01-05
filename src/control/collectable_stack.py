@@ -61,15 +61,15 @@ class CollectableStack(object):
     def generate_collectable(self):
         """Randomly places 10 collectables in the matrix."""
         matrix = self._game_state.get_matrix()
-        for i in range(0, 10):
-            x = math.ceil(random.random() * 19)
-            y = math.ceil(random.random() * 19)
-
-            if matrix[x][y]:
-                # If there is already a collectable here, we have to place the current one elsewhere
-                i = i - 1
-            else:
-                self._game_state.add_collectable(x,y)
+        for i in range(0, int(len(matrix)/2)):
+            placed = False
+            while not placed:
+                x = math.ceil(random.random() * len(matrix) -1)
+                y = math.ceil(random.random() * len(matrix[0]) -1)
+                if not matrix[x][y]:
+                    # If there is already a collectable here, we have to place the current one elsewhere
+                    self._game_state.add_collectable(x,y)
+                    placed = True
 
     def create_collectable(self, matrix):
         """Put collectables in the game from another matrix"""
