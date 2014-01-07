@@ -31,22 +31,19 @@ class CollectableStack(object):
         self.create_collectable(matrix)
         self._collectable_manager.set_started(True)
 
-    def check_wizard_collectable(self, wizard):
+    def check_collectable(self, player):
         """Checks if the wizard is on a collectable, and thus has the right to take it."""
         # Translation of the wizard's position into matrix coordinates
-        x = math.ceil(wizard._x / 23)
-        y = math.ceil(wizard._y / 23)
+        x = math.ceil(player._x / 23)
+        y = math.ceil(player._y / 23)
 
         # If the wizard is on a collecable
-        if self._game_state.wizard_on_collectable(x, y):
+        if self._game_state.player_on_collectable(x, y):
             # We remove the collectable both from our session and other player's one
-            self._connection_manager.remove_collectable(x, y)
-            self.remove_collectable(self._connection_manager.get_ip_serv(), x, y)
+            self.remove_collectable(player._ip, x, y)
 
             # If there are no collectable remaining
             if self._game_state.get_nb_coll() == 0:
-                # We indicates to other players that the game is finished
-                self._connection_manager.wizard_finish_game()
                 # And we go to the end
                 self._katch.finish_game()
 

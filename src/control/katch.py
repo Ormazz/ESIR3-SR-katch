@@ -125,6 +125,7 @@ class Katch(object):
         if direction == player.RIGHT:
             player.move(player.RIGHT)
             character.right()
+        self._collectable_stack.check_collectable(player)
 
     def move_wizard(self, event):
         """Move the local player in a direction"""
@@ -145,22 +146,19 @@ class Katch(object):
                     # Move the wizard in the display
                     self._player_manager.wizard.down()
                     # Check if the wizard has obtained a collectable
-                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_UP and position[1] > 0:
                     self._connection_manager.move_wizard(wizard.UP)
                     wizard.move(wizard.UP)
                     self._player_manager.wizard.up()
-                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_LEFT and position[0] > 0:
                     self._connection_manager.move_wizard(wizard.LEFT)
                     wizard.move(wizard.LEFT)
                     self._player_manager.wizard.left()
-                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
                 if event.key == pygame.K_RIGHT and position[0] + 1 < game_state.MAP_WIDTH:
                     self._connection_manager.move_wizard(wizard.RIGHT)
                     wizard.move(wizard.RIGHT)
                     self._player_manager.wizard.right()
-                    self._collectable_stack.check_wizard_collectable(self._player_manager.wizard)
+                self._collectable_stack.check_collectable(self._player_manager.wizard)
 
     def remove_collectable(self, ip, x, y):
         """Remove a collectable from the game"""

@@ -59,7 +59,7 @@ class GameState(object):
         self._nb_coll.value = self._nb_coll.value - 1
         self._edit_matrix_value(x,y,False)
 
-    def wizard_on_collectable(self, x, y):
+    def player_on_collectable(self, x, y):
         """Returns True if there is a collectable on the given position"""
         return self._matrix[x][y]
 

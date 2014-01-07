@@ -26,11 +26,3 @@ class Network(object):
     def remove_player(self, ip):
         """Remove a player from the local list"""
         connectionManager.ConnectionManager().remove_player(ip)
-
-    def remove_collectable(self, ip, x , y):
-        """Remove a collectable from the game"""
-        connectionManager.ConnectionManager().remove_wizard_collectable(ip, x, y)
-
-    def finish_game(self):
-        """Announces the end of the game"""
-        return connectionManager.ConnectionManager().finish_game()

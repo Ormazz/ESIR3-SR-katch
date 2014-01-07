@@ -83,16 +83,6 @@ class ConnectionManager(object):
         network = self.get_network(ip)
         return network.get_collectables()
 
-    def remove_wizard_collectable(self, ip, x, y):
-        """A collectable has been taken by another player"""
-        katch.Katch().remove_collectable(ip, x, y)
-
-    def remove_collectable(self, x, y):
-        """Inform other players that our wizard has taken a collectable"""
-        for ip in self._ip_list:
-            network = self.get_network(ip)
-            network.remove_collectable(self._ip_serv, x, y)
-
     def get_wizard_collectables(self):
         """Return the local collectables' matrix"""
         return katch.Katch().get_collectable()
@@ -107,16 +97,6 @@ class ConnectionManager(object):
         """Receives the exit message from a player. Removes it from the ips list."""
         self._ip_list.remove(ip)
         katch.Katch().remove_player(ip)
-
-    def wizard_finish_game(self):
-        """Informs other players that we have taken the last collectable, and that the game is finished."""
-        for ip in self._ip_list:
-            network = self.get_network(ip)
-            network.finish_game()
-
-    def finish_game(self):
-        """End the game"""
-        katch.Katch().finish_game()
 
     def get_network(self, ip):
         return Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip)
