@@ -14,9 +14,9 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
         * screen : game display
     """
 
-    wizard = None
     started = False
     _players = []
+    _wizard_ip = None
     _screen = None
     _players_layout = None
 
@@ -32,8 +32,6 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
     def update(self):
         """Updates the players in the game"""
         if self.started:
-            # First the local player
-            self.wizard.update()
             # Then the others
             for player in self._players:
                 player.update()
@@ -44,13 +42,15 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
 
     def activate_player(self, x, y, ip):
         """Insert the local player in the display"""
-        self.wizard = character.Character(self._screen, "../img/wizard.png", x, y, ip)
-        self.wizard.set_position(x, y)
+        self._players.append(character.Character(self._screen, "../img/wizard.png", x, y, ip))
+        self._wizard_ip = ip
+        self._players[len(self._players) - 1].set_position(x, y)
         self.started = True
         self.set_score_player(ip, 0)
 
     def create_player(self, x, y, ip, score):
         """Create a new player"""
+
         self._players.append(character.Character(self._screen, "../img/player.png", x, y, ip))
         self.set_score_player(ip, score)
 
@@ -62,34 +62,36 @@ class PlayerManager(updatable.Updatable, gui_control.GuiControl):
 
     def wizard_can_move(self, direction):
         """Tells if the local player collides with another player if he goes in that direction. If this is the case, he won't move."""
+        wizard = self.get_player(self._wizard_ip)
         # Read the current position
-        old_x = self.wizard._x
-        old_y = self.wizard._y
+        old_x = wizard._x
+        old_y = wizard._y
         # Move the wizard, just to try
-        self.wizard_position(direction)
+        self.wizard_position(wizard, direction)
 
         result = True
         # Now, where are the other players ?
         for p in self._players:
-            if p._x == self.wizard._x and p._y == self.wizard._y:
-                # One seems to be at the same spot than us! This is wrong.
-                result = False
-                break
+            if p._ip != self._wizard_ip:
+                if p._x == wizard._x and p._y == wizard._y:
+                    # One seems to be at the same spot than us! This is wrong.
+                    result = False
+                    break
 
         # The wizard go back to its old position ; nothing happened (yet)
-        self.wizard.set_position(old_x, old_y)
+        wizard.set_position(old_x, old_y)
         return result
 
-    def wizard_position(self, direction):
+    def wizard_position(self, wizard, direction):
         """Moves the wizard one case in the given direction"""
         if direction == pygame.K_UP:
-            self.wizard.set_position(self.wizard._x, self.wizard._y - self.wizard._scope)
+            wizard.set_position(wizard._x, wizard._y - wizard._scope)
         elif direction == pygame.K_DOWN:
-            self.wizard.set_position(self.wizard._x, self.wizard._y + self.wizard._scope)
+            wizard.set_position(wizard._x, wizard._y + wizard._scope)
         elif direction == pygame.K_LEFT:
-            self.wizard.set_position(self.wizard._x - self.wizard._scope, self.wizard._y)
+            wizard.set_position(wizard._x - wizard._scope, wizard._y)
         elif direction == pygame.K_RIGHT:
-            self.wizard.set_position(self.wizard._x + self.wizard._scope, self.wizard._y)
+            wizard.set_position(wizard._x + wizard._scope, wizard._y)
 
     def get_player(self, ip):
         """Returns a player, identified by its ip"""

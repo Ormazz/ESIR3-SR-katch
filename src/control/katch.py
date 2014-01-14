@@ -3,6 +3,12 @@ from model import player
 from control import collectable_stack
 import pygame
 
+import datetime
+from time import mktime
+import time
+from multiprocessing import Manager
+import threading
+
 # IMPORTANT : while the players of the game are called "player", the local player is identified as "wizard".
 # You should remember this if you don't want any confusion!
 
@@ -28,6 +34,14 @@ class Katch(object):
     _display_manager = None
     _collectable_manager = None
     _collectable_stack = None
+
+    runnable = True
+    _manager = Manager()
+    direction =  _manager.Value('i', -1)
+    players_direction = _manager.dict()
+    orders_nb  = _manager.Value("i", 0)
+    condition = threading.Condition()
+    player_ack = _manager.dict()
 
     def __new__(my_class):
         # Katch is a singleton : if it has already been constructed, we return the one that is running
@@ -63,6 +77,7 @@ class Katch(object):
 
         #Get the position and the score of the player
         inf = self._connection_manager.get_player_information(ip)
+
         new_player._x = inf[0]
         new_player._y = inf[1]
         new_player.score = inf[2]
@@ -136,33 +151,49 @@ class Katch(object):
                 # Retrieve the wizard and its position in the model
                 wizard = self.get_player(self._connection_manager.get_ip_serv())
                 position = wizard.get_position()
-                # Set the wizard's new position acording to the direction he moved
-                # (these if else are so ugly… but is it right to comment the code in comments?)
                 if event.key == pygame.K_DOWN and position[1] + 1 < game_state.MAP_HEIGTH:
-                    # Announces to other players that the wizard has moved
-                    self._connection_manager.move_wizard(wizard.DOWN)
-                    # Moves the wizard in the model
-                    wizard.move(wizard.DOWN)
-                    # Move the wizard in the display
-                    self._player_manager.wizard.down()
-                    # Check if the wizard has obtained a collectable
+                    self.direction.value = wizard.DOWN
                 if event.key == pygame.K_UP and position[1] > 0:
-                    self._connection_manager.move_wizard(wizard.UP)
-                    wizard.move(wizard.UP)
-                    self._player_manager.wizard.up()
+                    self.direction.value = wizard.UP
                 if event.key == pygame.K_LEFT and position[0] > 0:
-                    self._connection_manager.move_wizard(wizard.LEFT)
-                    wizard.move(wizard.LEFT)
-                    self._player_manager.wizard.left()
+                    self.direction.value = wizard.LEFT
                 if event.key == pygame.K_RIGHT and position[0] + 1 < game_state.MAP_WIDTH:
-                    self._connection_manager.move_wizard(wizard.RIGHT)
-                    wizard.move(wizard.RIGHT)
-                    self._player_manager.wizard.right()
-                self._collectable_stack.check_collectable(self._player_manager.wizard)
+                    self.direction.value = wizard.RIGHT
 
-    def remove_collectable(self, ip, x, y):
-        """Remove a collectable from the game"""
-        self._collectable_stack.remove_collectable(ip, x, y)
+    def run(self):
+        while not self._player_manager.get_started():
+            pass
+
+        time.sleep(2)
+        start = self.get_time()
+        while self.runnable:
+            print("Direction " + str(self.direction.value))
+            self._connection_manager.move_wizard(self.direction.value)
+            self.direction.value = -1
+            self.receive_direction()
+            start = self.get_time()
+
+    def receive_direction(self):
+        with self.condition:
+            self.condition.wait(self.orders_nb.value !=  len(self._connection_manager._ip_list) + 1)
+            ip_list =  self._connection_manager._ip_list
+            for ip in ip_list:
+                self.move_player(ip, self.players_direction[ip])
+                self.orders_nb.value = self.orders_nb.value - 1
+
+            self.move_player(self._connection_manager._ip_serv, self.players_direction[self._connection_manager._ip_serv])
+            self.orders_nb.value = self.orders_nb.value - 1
+            self._connection_manager.wizard_ack()
+
+            while len(self.player_ack)  != len(self._connection_manager._ip_list):
+                pass
+            self.player_ack.clear()
+
+
+    def get_time(self):
+        dt = datetime.datetime.now()
+        sec_since_epoch = mktime(dt.timetuple()) + dt.microsecond/1000000.0
+        return sec_since_epoch * 1000
 
     def get_collectable(self):
         """Return the collectables' matrix"""
@@ -172,6 +203,7 @@ class Katch(object):
         """Local exit method ; Alert the other players that we are not connected anymore"""
         if self._player_manager.get_started():
             self._connection_manager.leave()
+            self.runnable = False
 
     def remove_player(self,ip):
         """Remove a player that has left the game"""

@@ -1,6 +1,7 @@
 import connection
 from control import katch
 import Pyro4
+import threading
 
 class ConnectionManager(object):
     """Manages the communication with other players. Contains the list of other players' ips.
@@ -59,7 +60,6 @@ class ConnectionManager(object):
 
         # Before continuing, we add its ip in our list
         self.add_peer(ip_addr)
-
         # Browsing the ip known by the other player
         for ip in ip_list_from_peer:
             if self._ip_serv != ip:
@@ -67,16 +67,24 @@ class ConnectionManager(object):
                     # If it is a totally new ip, we repeat the process with that player
                     self.connection_to_peer(ip)
 
+
     def move_wizard(self, direction):
         """Inquires other player to move our wizard in the given direction."""
         for ip in self._ip_list:
             # For all players, we get their RMI, and move the player that have our ip
             network = self.get_network(ip)
             network.move_player(self._ip_serv, direction)
+        network = self.get_network(self._ip_serv)
+        network.move_player(self._ip_serv, direction)
 
     def move_player(self, ip, direction):
         """Moves the player given by its ip in the given direction"""
-        katch.Katch().move_player(ip, direction)
+        cont = katch.Katch()
+        with cont.condition:
+            cont.players_direction[ip] = direction
+            cont.orders_nb.value = cont.orders_nb.value + 1
+            if cont.orders_nb.value == len(self._ip_list) + 1:
+                cont.condition.notify()
 
     def get_collectables(self, ip):
         """Obtains the collectables' matrix from a player"""
@@ -100,3 +108,11 @@ class ConnectionManager(object):
 
     def get_network(self, ip):
         return Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip)
+
+    def player_ack(self, ip):
+        katch.Katch().player_ack[ip] = True
+
+    def wizard_ack(self,):
+        for ip in self._ip_list:
+            network = self.get_network(ip)
+            network.player_ack(self._ip_serv)

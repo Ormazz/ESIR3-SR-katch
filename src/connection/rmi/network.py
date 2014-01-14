@@ -26,3 +26,7 @@ class Network(object):
     def remove_player(self, ip):
         """Remove a player from the local list"""
         connectionManager.ConnectionManager().remove_player(ip)
+
+    def player_ack(self, ip):
+        """Acknowledgement of a player'"""
+        connectionManager.ConnectionManager().player_ack(ip)
