@@ -9,11 +9,15 @@ class Network(object):
 
     def get_ip_list(self):
         """Return the list of players known by the local application"""
-        return connectionManager.ConnectionManager()._ip_list
+        ips = []
+        ip_list = connectionManager.ConnectionManager()._ip_list
+        for ip in ip_list:
+            ips.append(ip)
 
+        return ips
     def add_ip(self, ip):
         """Add a new player to the game"""
-        connectionManager.ConnectionManager().add_peer(ip)
+        connectionManager.ConnectionManager().add_peer_from_net(ip)
 
     def move_player(self, ip, direction):
         """Moves a player (identified by its ip) one case in the given direction"""

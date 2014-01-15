@@ -91,7 +91,9 @@ class Katch(object):
         #If the game isn't started (ie: first connection to a player)
         #We create the player character (wizard)
         #And we disable the input box where the ip is writed
+        print("doudodouu")
         if not self._player_manager.get_started():
+            print("hololololololo")
             self.activate_player(self._connection_manager.get_ip_serv())
             self._display_manager.disabled_input_box()
 
@@ -161,34 +163,64 @@ class Katch(object):
                     self.direction.value = wizard.RIGHT
 
     def run(self):
-        while not self._player_manager.get_started():
+        while self._connection_manager.during_connection:
             pass
+        print("Launch")
 
-        time.sleep(2)
+
         start = self.get_time()
         while self.runnable:
-            print("Direction " + str(self.direction.value))
-            self._connection_manager.move_wizard(self.direction.value)
-            self.direction.value = -1
-            self.receive_direction()
-            start = self.get_time()
+            if self.get_time() - start > 5000:
+                self._connection_manager.move_wizard(self.direction.value)
+                self.direction.value = -1
+                self.receive()
+                start = self.get_time()
 
-    def receive_direction(self):
+    def receive(self):
+        print("hoy")
         with self.condition:
-            self.condition.wait(self.orders_nb.value !=  len(self._connection_manager._ip_list) + 1)
+
+            self.condition.wait(self.orders_nb.value <  len(self._connection_manager._ip_list) + 1)
+
+            print("Remove " + str(self._connection_manager._ip_list))
+            print("Remove " + str(self._connection_manager.delete_player))
+            for ip in self._connection_manager.delete_player:
+                print("remove  " + ip)
+                self._connection_manager._ip_list.remove(ip)
+                self.remove_player(ip)
+            self._connection_manager.delete_player.clear()
+
             ip_list =  self._connection_manager._ip_list
+
+            print(str(self.players_direction))
+            count = 0
             for ip in ip_list:
-                self.move_player(ip, self.players_direction[ip])
-                self.orders_nb.value = self.orders_nb.value - 1
+                print("Move " + ip)
+                if ip in self.players_direction:
+                    self.move_player(ip, self.players_direction[ip])
+                    self.orders_nb.value = self.orders_nb.value - 1
+                else:
+                    count = count + 1
 
             self.move_player(self._connection_manager._ip_serv, self.players_direction[self._connection_manager._ip_serv])
             self.orders_nb.value = self.orders_nb.value - 1
             self._connection_manager.wizard_ack()
 
-            while len(self.player_ack)  != len(self._connection_manager._ip_list):
+            print("before ack")
+            while len(self.player_ack)  < (len(self._connection_manager._ip_list) - count):
                 pass
+            print("after ack")
             self.player_ack.clear()
 
+             #new player
+            for ip in self._connection_manager.new_player:
+                print("add " + ip)
+                self._connection_manager._ip_list.append(ip)
+                # We have to add a new player
+                self.add_player(ip)
+            self._connection_manager.new_player.clear()
+            print("dou")
+            #delete player
 
     def get_time(self):
         dt = datetime.datetime.now()
@@ -207,7 +239,7 @@ class Katch(object):
 
     def remove_player(self,ip):
         """Remove a player that has left the game"""
-
+        del self.players_direction[ip]
         # Removing from the model
         self._game_state.remove_player(self._game_state.get_player(ip))
         # Removing from the interface

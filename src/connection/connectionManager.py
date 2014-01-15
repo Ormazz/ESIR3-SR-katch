@@ -1,7 +1,7 @@
 import connection
 from control import katch
 import Pyro4
-import threading
+from multiprocessing import Manager
 
 class ConnectionManager(object):
     """Manages the communication with other players. Contains the list of other players' ips.
@@ -14,8 +14,13 @@ class ConnectionManager(object):
     """
 
     instance = None
-    _ip_list = []
+
+    _manager = Manager()
+    _ip_list = _manager.list()
     _ip_serv = None
+    new_player = []
+    delete_player = []
+    during_connection = True
 
     def __new__(my_class):
         if my_class.instance is None:
@@ -40,12 +45,17 @@ class ConnectionManager(object):
         inf.append(player.score)
         return inf
 
+    def add_peer_from_net(self, ip):
+        self.add_peer(ip)
+        self.during_connection = False
+
     def add_peer(self, ip):
         """Add a new ip in the list of known ip. Does not add it if it is already in it."""
-        if ip not in self._ip_list:
-            self._ip_list.append(ip)
-            # We have to add a new player
-            katch.Katch().add_player(ip)
+        print("stuck" + ip)
+        with katch.Katch().condition:
+            if ip not in self._ip_list:
+                print("add")
+                self.new_player.append(ip)
 
     def connection_to_peer(self, ip_addr):
         """Connection to an existing network by an ip. This will allow us to connect with every other players.
@@ -63,9 +73,11 @@ class ConnectionManager(object):
         # Browsing the ip known by the other player
         for ip in ip_list_from_peer:
             if self._ip_serv != ip:
-                if ip not in self._ip_list:
+                if ip not in self._ip_list and ip not in self.new_player:
                     # If it is a totally new ip, we repeat the process with that player
                     self.connection_to_peer(ip)
+        print("Connection finish")
+        self.during_connection = False
 
 
     def move_wizard(self, direction):
@@ -73,7 +85,11 @@ class ConnectionManager(object):
         for ip in self._ip_list:
             # For all players, we get their RMI, and move the player that have our ip
             network = self.get_network(ip)
-            network.move_player(self._ip_serv, direction)
+
+            try :
+                network.move_player(self._ip_serv, direction)
+            except Exception:
+                self.remove_player(ip)
         network = self.get_network(self._ip_serv)
         network.move_player(self._ip_serv, direction)
 
@@ -102,9 +118,10 @@ class ConnectionManager(object):
             network.remove_player(self._ip_serv)
 
     def remove_player(self, ip):
-        """Receives the exit message from a player. Removes it from the ips list."""
-        self._ip_list.remove(ip)
-        katch.Katch().remove_player(ip)
+        with katch.Katch().condition:
+            """Receives the exit message from a player. Removes it from the ips list."""
+            if ip not in self.delete_player:
+                self.delete_player.append(ip)
 
     def get_network(self, ip):
         return Pyro4.Proxy("PYRO:" + connection.URI_CONNECTION + "@" + ip)
@@ -115,4 +132,7 @@ class ConnectionManager(object):
     def wizard_ack(self,):
         for ip in self._ip_list:
             network = self.get_network(ip)
-            network.player_ack(self._ip_serv)
+            try :
+                network.player_ack(self._ip_serv)
+            except Exception:
+                self._ip_list.remove(ip)

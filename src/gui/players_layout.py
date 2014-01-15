@@ -1,5 +1,6 @@
 import pygame
 from gui import updatable
+import threading
 
 class PlayersLayout(updatable.Updatable, object):
     """Layout were players are displayed"""
@@ -7,6 +8,7 @@ class PlayersLayout(updatable.Updatable, object):
     screen = None
     _players_score = {}
 
+    _condition = threading.Condition()
 
     def __init__(self, screen):
         self.screen = screen
@@ -20,24 +22,28 @@ class PlayersLayout(updatable.Updatable, object):
         pygame.draw.rect(self.screen, pygame.Color("white"), pygame.Rect(self.screen.get_width() - 200, 0, 420, 460))
 
     def remove_player(self, ip):
-        del self._players_score[ip]
+        with self._condition:
+            del self._players_score[ip]
 
     def set_score_player(self, ip, score):
-        self._players_score[ip] = score
+        with self._condition:
+            self._players_score[ip] = score
 
     def incr_score_player(self, ip):
-        if ip in self._players_score:
-            self._players_score[ip] = self._players_score[ip] + 1
-        else:
-            self._players_score[ip] = 0
+        with self._condition:
+            if ip in self._players_score:
+                self._players_score[ip] = self._players_score[ip] + 1
+            else:
+                self._players_score[ip] = 0
 
     def update(self):
-        self.clean_list()
-        self.draw("Players", 16, self.screen.get_width() - 185, 10)
-        y = 40
-        for p in self._players_score:
-            self.draw(p + "   " + str(self._players_score[p]), 14, self.screen.get_width() - 190, y)
-            y += 20
+        with self._condition:
+            self.clean_list()
+            self.draw("Players", 16, self.screen.get_width() - 185, 10)
+            y = 40
+            for p in self._players_score:
+                self.draw(p + "   " + str(self._players_score[p]), 14, self.screen.get_width() - 190, y)
+                y += 20
 
 
     # def update(self):
