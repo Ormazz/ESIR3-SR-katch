@@ -192,6 +192,8 @@ class Katch(object):
 
             ip_list =  self._connection_manager._ip_list
 
+            self.resolve_conflict(ip_list)
+
             print(str(self.players_direction))
             count = 0
             for ip in ip_list:
@@ -226,6 +228,38 @@ class Katch(object):
         dt = datetime.datetime.now()
         sec_since_epoch = mktime(dt.timetuple()) + dt.microsecond/1000000.0
         return sec_since_epoch * 1000
+
+    def resolve_conflict(self, ips):
+        conflicts = dict()
+        ip_list = list(ips)
+        ip_list.append(self._connection_manager._ip_serv)
+        print("direction " + str(self.players_direction))
+        for ip in ip_list:
+            if ip in self.players_direction:
+                player = self.get_player(ip)
+                old_x = player._x
+                old_y = player._y
+
+                player.move(self.players_direction[ip])
+
+                print("Coord " + str(player._x) + " " + str(player._y))
+                info = [player._x, player._y]
+                conflicts[ip] = info
+                print(ip + " " + str(info))
+                print("Conflicts  " + str(conflicts))
+                for check_ip in conflicts:
+                    print("Check ip " + check_ip)
+                    if check_ip != ip:
+                        if conflicts[check_ip][0] ==  player._x and conflicts[check_ip][1] == player._y:
+                            if self.players_direction[check_ip] == -1 or  ip < check_ip:
+                                print("First")
+                                self.players_direction[ip] = -1
+                            else:
+                                print("Second")
+                                self.players_direction[check_ip] = -1
+                            break
+                player._x = old_x
+                player._y = old_y
 
     def get_collectable(self):
         """Return the collectables' matrix"""
